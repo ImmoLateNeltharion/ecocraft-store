@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #FFF8E7; /* ivory - слоновая кость */
+  --fg: #333333;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center rounded-xl2 px-5 py-2.5 border border-graphite/10 shadow-sm hover:shadow-md transition-all duration-200 font-medium;
+}
+
+.btn-primary {
+  @apply bg-moss text-white border-moss hover:bg-moss/90;
+}
+
+.btn-secondary {
+  @apply bg-white text-graphite hover:bg-sand/30;
+}
+
+.card {
+  @apply rounded-xl2 bg-white/70 backdrop-blur border border-black/5 shadow-sm hover:shadow-md transition-shadow duration-200;
+}
+
+.badge {
+  @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium bg-sand/70 text-graphite;
+}
+
+.input {
+  @apply w-full rounded-xl2 border border-graphite/20 px-4 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-moss/50 focus:border-moss transition-all;
+}
+
+.textarea {
+  @apply w-full rounded-xl2 border border-graphite/20 px-4 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-moss/50 focus:border-moss transition-all min-h-[120px] resize-y;
+}
+
+.select {
+  @apply w-full rounded-xl2 border border-graphite/20 px-4 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-moss/50 focus:border-moss transition-all cursor-pointer;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.8s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
