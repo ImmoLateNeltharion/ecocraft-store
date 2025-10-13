@@ -48,12 +48,15 @@ export default async function ProductPage({ params }: { params: { slug: string }
     return notFound()
   }
 
+  const productId = product.id
+  const productSlug = product.slug
+
   async function handleAddToCart(formData: FormData) {
     'use server'
     const sizeId = formData.get('sizeId')?.toString()
-    await addToCart({ productId: product.id, sizeId, qty: 1 })
+    await addToCart({ productId, sizeId, qty: 1 })
     revalidatePath('/cart')
-    revalidatePath(`/product/${product.slug}`)
+    revalidatePath(`/product/${productSlug}`)
   }
 
   return (
