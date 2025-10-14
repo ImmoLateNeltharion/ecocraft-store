@@ -50,6 +50,13 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
   const productId = product.id
   const productSlug = product.slug
+  
+  // Сериализуем размеры для клиента
+  const sizesData = product.sizes.map(s => ({
+    id: s.id,
+    label: s.label,
+    inStock: s.inStock
+  }))
 
   async function handleAddToCart(formData: FormData) {
     'use server'
@@ -128,7 +135,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
           )}
 
           {/* Форма добавления в корзину */}
-          <AddToCartForm action={handleAddToCart} sizes={product.sizes} />
+          <AddToCartForm action={handleAddToCart} sizes={sizesData} />
 
           {/* Описание */}
           <div className="prose prose-sm max-w-none">
