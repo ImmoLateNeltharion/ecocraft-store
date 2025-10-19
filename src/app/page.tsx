@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { prisma } from '@/lib/db'
 import ProductCard from '@/components/ProductCard'
 import Badge from '@/components/Badge'
+import Logo from '@/components/Logo'
 
 export default async function HomePage() {
   const products = await prisma.product.findMany({
@@ -25,8 +26,11 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50" />
         
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto animate-fade-in">
+          <div className="flex items-center justify-center mb-6">
+            <Logo />
+          </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif mb-6 leading-tight drop-shadow-lg">
-            Warm & Made Blankets
+            Долина снов Анэль
           </h1>
           <p className="text-lg md:text-xl mb-8 text-white/90 max-w-2xl mx-auto leading-relaxed">
             Натуральные ткани, созданные с любовью. Экологичные одеяла и шоперы ручной работы 
@@ -41,27 +45,29 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Сетка изображений с текстом (как на референсе) */}
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
-        {/* Карточка 1 */}
-        <div className="relative h-[400px] overflow-hidden group">
-          <Image
-            src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&h=800&fit=crop"
-            alt="Льняные одеяла"
-            fill
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
-            <h3 className="text-2xl font-serif mb-2">Льняная коллекция</h3>
-            <p className="text-sm text-white/80 mb-4">Натуральный лён с терморегуляцией</p>
-            <Link href="/catalog?material=LINEN" className="text-sm underline hover:no-underline">
-              Смотреть →
-            </Link>
-          </div>
+      {/* Заглавная фотка */}
+      <section className="relative h-[500px] overflow-hidden">
+        <Image
+          src="/images/linen-fabrics.jpg"
+          alt="Льняная коллекция"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+          <h2 className="text-3xl md:text-4xl font-serif mb-4">Льняная коллекция</h2>
+          <p className="text-lg text-white/90 mb-6 max-w-2xl">
+            Натуральный лён с терморегуляцией. Идеальный выбор для комфортного сна в любое время года.
+          </p>
+          <Link href="/catalog?material=LINEN" className="text-lg underline hover:no-underline">
+            Смотреть коллекцию →
+          </Link>
         </div>
+      </section>
 
-        {/* Карточка 2 */}
+      {/* Три раздела */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-0">
+        {/* Карточка 1 - Муслин */}
         <div className="relative h-[400px] overflow-hidden group">
           <Image
             src="/images/muslin-fabrics.jpg"
@@ -79,7 +85,7 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* Карточка 3 */}
+        {/* Карточка 2 - Фланель */}
         <div className="relative h-[400px] overflow-hidden group">
           <Image
             src="/images/flannel-fabrics.jpg"
@@ -97,7 +103,7 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* Карточка 4 */}
+        {/* Карточка 3 - Тенсель */}
         <div className="relative h-[400px] overflow-hidden group">
           <Image
             src="/images/tencel-fabrics.jpg"
