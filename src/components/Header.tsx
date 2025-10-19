@@ -1,6 +1,6 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getCart } from '@/lib/cart'
-import Logo from './Logo'
 
 export default async function Header() {
   const cart = await getCart()
@@ -12,7 +12,13 @@ export default async function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Логотип */}
           <Link href="/" className="hover:opacity-80 transition-opacity">
-            <Logo />
+            <Image
+              src="/images/logo.jpg"
+              alt="Долина снов Анэль"
+              width={120}
+              height={40}
+              className="h-8 w-auto"
+            />
           </Link>
 
           {/* Навигация */}

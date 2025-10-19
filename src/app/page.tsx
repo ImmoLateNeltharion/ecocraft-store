@@ -17,7 +17,7 @@ export default async function HomePage() {
       {/* Hero с большим изображением и текстом поверх */}
       <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1920&h=1080&fit=crop"
+          src="/images/background.img"
           alt="Уютные одеяла"
           fill
           className="object-cover"
@@ -26,9 +26,6 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50" />
         
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto animate-fade-in">
-          <div className="flex items-center justify-center mb-6">
-            <Logo />
-          </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif mb-6 leading-tight drop-shadow-lg">
             Долина снов Анэль
           </h1>
@@ -41,26 +38,6 @@ export default async function HomePage() {
             className="inline-block bg-white text-graphite px-8 py-4 rounded-full font-medium hover:bg-sand transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
           >
             Смотреть коллекцию
-          </Link>
-        </div>
-      </section>
-
-      {/* Заглавная фотка */}
-      <section className="relative h-[500px] overflow-hidden">
-        <Image
-          src="/images/linen-fabrics.jpg"
-          alt="Льняная коллекция"
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-          <h2 className="text-3xl md:text-4xl font-serif mb-4">Льняная коллекция</h2>
-          <p className="text-lg text-white/90 mb-6 max-w-2xl">
-            Натуральный лён с терморегуляцией. Идеальный выбор для комфортного сна в любое время года.
-          </p>
-          <Link href="/catalog?material=LINEN" className="text-lg underline hover:no-underline">
-            Смотреть коллекцию →
           </Link>
         </div>
       </section>
