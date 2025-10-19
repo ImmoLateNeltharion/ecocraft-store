@@ -25,7 +25,8 @@ const MATERIAL_LABELS: Record<string, string> = {
   RECYCLED: 'Переработанное',
   NETTLE: 'Крапива',
   MUSLIN: 'Муслин',
-  FLANNEL: 'Фланель'
+  FLANNEL: 'Фланель',
+  TENCEL: 'Тенсель'
 }
 
 const WARMTH_LABELS: Record<string, string> = {

@@ -17,6 +17,7 @@ const OPTIONS = {
     ['NETTLE', 'Крапива'],
     ['MUSLIN', 'Муслин'],
     ['FLANNEL', 'Фланель'],
+    ['TENCEL', 'Тенсель'],
     ['RECYCLED', 'Переработанное']
   ],
   warmth: [

@@ -69,6 +69,7 @@ enum Material {
   NETTLE
   MUSLIN
   FLANNEL
+  TENCEL
 }
 
 enum Warmth {

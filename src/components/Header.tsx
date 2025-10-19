@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getCart } from '@/lib/cart'
+import Logo from './Logo'
 
 export default async function Header() {
   const cart = await getCart()
@@ -10,8 +11,8 @@ export default async function Header() {
       <div className="container">
         <div className="flex items-center justify-between h-16">
           {/* Логотип */}
-          <Link href="/" className="font-serif text-2xl text-graphite hover:text-moss transition-colors">
-            EcoCraft
+          <Link href="/" className="hover:opacity-80 transition-opacity">
+            <Logo />
           </Link>
 
           {/* Навигация */}
