@@ -64,7 +64,7 @@ export default async function HomePage() {
         {/* Карточка 2 */}
         <div className="relative h-[400px] overflow-hidden group">
           <Image
-            src="https://images.unsplash.com/photo-1615529182904-14819c35db37?w=800&h=800&fit=crop"
+            src="/images/muslin-fabrics.jpg"
             alt="Одеяла из муслина + крапива"
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -82,7 +82,7 @@ export default async function HomePage() {
         {/* Карточка 3 */}
         <div className="relative h-[400px] overflow-hidden group">
           <Image
-            src="https://images.unsplash.com/photo-1631889993959-41b4e9c6e3c5?w=800&h=800&fit=crop"
+            src="/images/flannel-fabrics.jpg"
             alt="Одеяла из фланели + крапива"
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -100,7 +100,7 @@ export default async function HomePage() {
         {/* Карточка 4 */}
         <div className="relative h-[400px] overflow-hidden group">
           <Image
-            src="https://images.unsplash.com/photo-1615529182904-14819c35db37?w=800&h=800&fit=crop"
+            src="/images/tencel-fabrics.jpg"
             alt="Одеяла из тенселя + крапива"
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
