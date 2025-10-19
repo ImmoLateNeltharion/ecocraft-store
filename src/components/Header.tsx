@@ -11,14 +11,17 @@ export default async function Header() {
       <div className="container">
         <div className="flex items-center justify-between h-16">
           {/* Логотип */}
-          <Link href="/" className="hover:opacity-80 transition-opacity">
+          <Link href="/" className="hover:opacity-80 transition-opacity flex items-center gap-3">
             <Image
               src="/images/logo.jpg"
               alt="Долина снов Анэль"
-              width={120}
+              width={40}
               height={40}
-              className="h-8 w-auto"
+              className="h-8 w-8 rounded-full object-cover"
             />
+            <span className="text-xl font-serif text-graphite font-bold">
+              Долина снов Анэль
+            </span>
           </Link>
 
           {/* Навигация */}

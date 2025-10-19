@@ -17,7 +17,7 @@ export default async function HomePage() {
       {/* Hero с большим изображением и текстом поверх */}
       <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <Image
-          src="/images/background.img"
+          src="/images/background.jpg"
           alt="Уютные одеяла"
           fill
           className="object-cover"
