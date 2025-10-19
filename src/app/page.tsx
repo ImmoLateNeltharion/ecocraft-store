@@ -116,7 +116,7 @@ export default async function HomePage() {
             </div>
             
             <h2 className="text-3xl md:text-4xl font-serif mb-6 text-graphite animate-slide-in-left">
-              Warm st Quality
+              Качественная фишка
             </h2>
             
             <div className="text-graphite/80 leading-relaxed space-y-4 animate-fade-in-up">
