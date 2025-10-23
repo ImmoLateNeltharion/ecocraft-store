@@ -2,6 +2,8 @@
 
 import { useFormStatus } from 'react-dom'
 import { useState, useEffect } from 'react'
+import { addToCart } from '@/lib/cart'
+import { revalidatePath } from 'next/cache'
 
 function SubmitButton() {
   const { pending } = useFormStatus()
@@ -32,20 +34,32 @@ function SubmitButton() {
 }
 
 export default function AddToCartForm({ 
-  action, 
+  productId,
   sizes 
 }: { 
-  action: (formData: FormData) => Promise<void>
+  productId: string
   sizes: Array<{ id: string; label: string; inStock: number }>
 }) {
   const [showSuccess, setShowSuccess] = useState(false)
 
   async function handleSubmit(formData: FormData) {
-    await action(formData)
+    'use server'
     
-    // Показываем уведомление
-    setShowSuccess(true)
-    setTimeout(() => setShowSuccess(false), 3000)
+    try {
+      // Получаем данные из формы
+      const sizeId = formData.get('sizeId')?.toString()
+      
+      // Добавляем в корзину
+      await addToCart({ productId, sizeId, qty: 1 })
+      
+      // Обновляем страницы
+      revalidatePath('/cart')
+      revalidatePath('/product')
+      
+      console.log('Added to cart:', { sizeId })
+    } catch (error) {
+      console.error('Error adding to cart:', error)
+    }
   }
 
   return (

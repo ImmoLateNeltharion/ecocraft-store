@@ -136,7 +136,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
           )}
 
           {/* Форма добавления в корзину */}
-          <AddToCartForm action={handleAddToCart} sizes={sizesData} />
+          <AddToCartForm productId={productId} sizes={sizesData} />
 
           {/* Описание */}
           <div className="prose prose-sm max-w-none">
