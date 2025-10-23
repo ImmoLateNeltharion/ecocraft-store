@@ -74,7 +74,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
         <div className="card overflow-hidden">
           <div className="aspect-[4/3] relative bg-sand/20">
             <Image
-              src={product.images[0]?.url ?? '/images/placeholder.jpg'}
+              src={product.images[0]?.url ?? '/images/background.jpg'}
               alt={product.title}
               fill
               className="object-cover"

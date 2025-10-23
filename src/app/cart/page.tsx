@@ -58,7 +58,7 @@ export default async function CartPage() {
                     className="relative w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-sand/20"
                   >
                     <Image
-                      src={item.p.images[0]?.url ?? '/images/placeholder.jpg'}
+                      src={item.p.images[0]?.url ?? '/images/background.jpg'}
                       alt={item.p.title}
                       fill
                       className="object-cover"

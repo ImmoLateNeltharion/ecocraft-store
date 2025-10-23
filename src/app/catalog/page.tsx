@@ -84,7 +84,7 @@ export default async function CatalogPage({
                 title={p.title}
                 subtitle={p.subtitle}
                 price={p.price}
-                image={p.images[0]?.url ?? '/images/placeholder.jpg'}
+                image={p.images[0]?.url ?? '/images/background.jpg'}
                 material={p.material}
               />
             ))}

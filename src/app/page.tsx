@@ -107,8 +107,8 @@ export default async function HomePage() {
             <div className="float-right ml-8 mb-8 w-full md:w-1/2 lg:w-2/5">
               <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl animate-slide-in-right">
                 <Image
-                  src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&h=1000&fit=crop"
-                  alt="Warm & Quality"
+                  src="/images/background.jpg"
+                  alt="Почему мы?"
                   fill
                   className="object-cover"
                 />
@@ -116,7 +116,7 @@ export default async function HomePage() {
             </div>
             
             <h2 className="text-3xl md:text-4xl font-serif mb-6 text-graphite animate-slide-in-left">
-              Качественная фишка
+              Почему мы?
             </h2>
             
             <div className="text-graphite/80 leading-relaxed space-y-4 animate-fade-in-up">
@@ -181,7 +181,7 @@ export default async function HomePage() {
                 title={p.title}
                 subtitle={p.subtitle}
                 price={p.price}
-                image={p.images[0]?.url ?? '/images/placeholder.jpg'}
+                image={p.images[0]?.url ?? '/images/background.jpg'}
                 material={p.material}
               />
             </div>
@@ -209,7 +209,7 @@ export default async function HomePage() {
       {/* CTA с фоновым изображением */}
       <section className="relative h-[400px] flex items-center justify-center overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1615529182904-14819c35db37?w=1920&h=800&fit=crop"
+          src="/images/background.jpg"
           alt="Индивидуальный заказ"
           fill
           className="object-cover"
