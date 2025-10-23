@@ -23,7 +23,7 @@ export default function ProductCard(props: ProductCardProps) {
           alt={props.title} 
           fill 
           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" 
-          className="object-cover group-hover:scale-110 transition-transform duration-500"
+          className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
       </div>

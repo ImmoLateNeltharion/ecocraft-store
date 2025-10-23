@@ -27,30 +27,43 @@ export default async function CheckoutPage() {
   async function handleSubmit(formData: FormData) {
     'use server'
     
-    // Здесь можно добавить отправку на email или сохранение в БД
-    const orderData = {
-      name: formData.get('name'),
-      phone: formData.get('phone'),
-      email: formData.get('email'),
-      address: formData.get('address'),
-      delivery: formData.get('delivery'),
-      comment: formData.get('comment'),
-      items: items.map(i => ({
-        product: i.p.title,
-        size: i.size?.label,
-        qty: i.qty,
-        price: i.p.price
-      })),
-      total
-    }
+    try {
+      // Получаем данные из формы
+      const name = formData.get('name')?.toString()
+      const phone = formData.get('phone')?.toString()
+      const email = formData.get('email')?.toString()
+      const address = formData.get('address')?.toString()
+      const delivery = formData.get('delivery')?.toString()
+      const comment = formData.get('comment')?.toString()
+      
+      // Создаем простой объект заказа
+      const orderData = {
+        name,
+        phone,
+        email,
+        address,
+        delivery,
+        comment,
+        items: items.map(i => ({
+          product: i.p.title,
+          size: i.size?.label || 'Не указан',
+          qty: i.qty,
+          price: i.p.price
+        })),
+        total
+      }
 
-    console.log('Новый заказ:', orderData)
-    
-    // Очищаем корзину
-    await clearCart()
-    
-    // Перенаправляем на страницу успеха
-    redirect('/checkout/success')
+      console.log('Новый заказ:', orderData)
+      
+      // Очищаем корзину
+      await clearCart()
+      
+      // Перенаправляем на страницу успеха
+      redirect('/checkout/success')
+    } catch (error) {
+      console.error('Ошибка при оформлении заказа:', error)
+      throw error
+    }
   }
 
   return (
