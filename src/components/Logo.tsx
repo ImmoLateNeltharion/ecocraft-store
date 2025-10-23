@@ -19,7 +19,7 @@ export default function Logo() {
         </svg>
       </div>
       <span className="text-xl font-serif text-graphite font-bold">
-        Долина снов Анэль
+        Долина снов Аниэль
       </span>
     </div>
   )

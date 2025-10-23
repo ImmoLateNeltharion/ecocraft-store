@@ -12,7 +12,8 @@ const nextConfig = {
         hostname: 'images.unsplash.com',
         pathname: '/**'
       }
-    ]
+    ],
+    unoptimized: true
   }
 }
 

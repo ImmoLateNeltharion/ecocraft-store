@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* О компании */}
           <div>
-            <h3 className="font-serif text-xl mb-4 text-graphite">EcoCraft</h3>
+            <h3 className="font-serif text-xl mb-4 text-graphite">Долина снов Аниэль</h3>
             <p className="text-sm text-graphite/70 leading-relaxed">
               Одеяла и шоперы ручной работы из натуральных экологичных тканей. 
               Русское ремесленное искусство, малые партии, без пластика.
@@ -56,7 +56,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="mt-12 pt-8 border-t border-black/5 text-center text-sm text-graphite/60">
-          © {new Date().getFullYear()} EcoCraft. Все права защищены.
+          © {new Date().getFullYear()} Долина снов Аниэль. Все права защищены.
         </div>
       </div>
     </footer>

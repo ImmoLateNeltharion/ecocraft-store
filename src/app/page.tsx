@@ -27,7 +27,7 @@ export default async function HomePage() {
         
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto animate-fade-in">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif mb-6 leading-tight drop-shadow-lg">
-            Долина снов Анэль
+            Долина снов Аниэль
           </h1>
           <p className="text-lg md:text-xl mb-8 text-white/90 max-w-2xl mx-auto leading-relaxed">
             Натуральные ткани, созданные с любовью. Экологичные одеяла и шоперы ручной работы 

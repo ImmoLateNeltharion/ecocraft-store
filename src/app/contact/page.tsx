@@ -45,8 +45,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <div className="text-sm text-graphite/60">Email</div>
-                    <a href="mailto:info@ecocraft.ru" className="text-moss hover:underline">
-                      info@ecocraft.ru
+                    <a href="mailto:info@snovaniel.ru" className="text-moss hover:underline">
+                      info@snovaniel.ru
                     </a>
                   </div>
                 </div>
