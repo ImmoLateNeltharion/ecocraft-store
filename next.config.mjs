@@ -6,14 +6,9 @@ const nextConfig = {
     }
   },
   images: {
-    remotePatterns: [
-      { 
-        protocol: 'https', 
-        hostname: 'images.unsplash.com',
-        pathname: '/**'
-      }
-    ],
-    unoptimized: true
+    unoptimized: true,
+    loader: 'custom',
+    loaderFile: './src/lib/imageLoader.js'
   }
 }
 

@@ -65,7 +65,7 @@ export default async function HomePage() {
         {/* Карточка 2 - Фланель */}
         <div className="relative h-[400px] overflow-hidden group">
           <Image
-            src="/images/flannel-fabrics.jpg"
+            src="/images/additional-fabric.jpg"
             alt="Одеяла из фланели + крапива"
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
