@@ -1,9 +1,8 @@
 'use client'
 
 import { useFormStatus } from 'react-dom'
-import { useState, useEffect } from 'react'
-import { addToCart } from '@/lib/cart'
-import { revalidatePath } from 'next/cache'
+import { useState, useTransition } from 'react'
+import { handleAddToCart } from './actions'
 
 function SubmitButton() {
   const { pending } = useFormStatus()
@@ -41,25 +40,18 @@ export default function AddToCartForm({
   sizes: Array<{ id: string; label: string; inStock: number }>
 }) {
   const [showSuccess, setShowSuccess] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   async function handleSubmit(formData: FormData) {
-    'use server'
-    
-    try {
-      // Получаем данные из формы
-      const sizeId = formData.get('sizeId')?.toString()
+    startTransition(async () => {
+      const result = await handleAddToCart(productId, formData)
       
-      // Добавляем в корзину
-      await addToCart({ productId, sizeId, qty: 1 })
-      
-      // Обновляем страницы
-      revalidatePath('/cart')
-      revalidatePath('/product')
-      
-      console.log('Added to cart:', { sizeId })
-    } catch (error) {
-      console.error('Error adding to cart:', error)
-    }
+      if (result.success) {
+        setShowSuccess(true)
+        // Скрыть уведомление через 3 секунды
+        setTimeout(() => setShowSuccess(false), 3000)
+      }
+    })
   }
 
   return (
