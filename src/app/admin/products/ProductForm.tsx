@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { createProduct, updateProduct } from './actions'
 import { Product, Image as PrismaImage, Size } from '@prisma/client'
+import Image from 'next/image'
 
 type ProductWithRelations = Product & {
   images: PrismaImage[]
@@ -18,6 +19,7 @@ export default function ProductForm({
   const [imageUrls, setImageUrls] = useState<string[]>(
     product?.images.map(img => img.url) || ['']
   )
+  const [uploadingIndexes, setUploadingIndexes] = useState<Set<number>>(new Set())
   const [sizes, setSizes] = useState<Array<{ label: string; inStock: number }>>(
     product?.sizes.map(s => ({ label: s.label, inStock: s.inStock })) || [{ label: '', inStock: 0 }]
   )
@@ -52,6 +54,39 @@ export default function ProductForm({
     const newUrls = [...imageUrls]
     newUrls[index] = value
     setImageUrls(newUrls)
+  }
+
+  async function handleImageUpload(index: number, file: File) {
+    if (!file) return
+
+    setUploadingIndexes(prev => new Set(prev).add(index))
+
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        updateImageUrl(index, data.url)
+      } else {
+        alert('Ошибка загрузки: ' + (data.error || 'Неизвестная ошибка'))
+      }
+    } catch (error) {
+      console.error('Ошибка загрузки:', error)
+      alert('Ошибка загрузки файла')
+    } finally {
+      setUploadingIndexes(prev => {
+        const newSet = new Set(prev)
+        newSet.delete(index)
+        return newSet
+      })
+    }
   }
 
   function addSize() {
@@ -232,27 +267,79 @@ export default function ProductForm({
           </button>
         </div>
 
-        <div className="space-y-3">
-          {imageUrls.map((url, index) => (
-            <div key={index} className="flex gap-2">
-              <input
-                type="text"
-                value={url}
-                onChange={(e) => updateImageUrl(index, e.target.value)}
-                className="input flex-1"
-                placeholder="/images/product-1.jpg"
-              />
-              {imageUrls.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => removeImageUrl(index)}
-                  className="btn btn-secondary px-4 text-red-600 hover:bg-red-50"
-                >
-                  ×
-                </button>
-              )}
-            </div>
-          ))}
+        <div className="space-y-4">
+          {imageUrls.map((url, index) => {
+            const isUploading = uploadingIndexes.has(index)
+            
+            return (
+              <div key={index} className="border border-graphite/20 rounded-lg p-4 space-y-3">
+                {/* Preview изображения */}
+                {url && (
+                  <div className="relative w-full aspect-[4/3] bg-sand rounded-lg overflow-hidden">
+                    <Image
+                      src={url}
+                      alt={`Image ${index + 1}`}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                )}
+
+                {/* Кнопка загрузки файла */}
+                <div className="flex gap-2">
+                  <label className="flex-1">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0]
+                        if (file) handleImageUpload(index, file)
+                      }}
+                      disabled={isUploading}
+                      className="hidden"
+                    />
+                    <div className="btn btn-secondary w-full text-center cursor-pointer disabled:opacity-50">
+                      {isUploading ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                          </svg>
+                          Загрузка...
+                        </span>
+                      ) : (
+                        '📁 Выбрать файл'
+                      )}
+                    </div>
+                  </label>
+
+                  {imageUrls.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeImageUrl(index)}
+                      className="btn btn-secondary px-4 text-red-600 hover:bg-red-50"
+                      disabled={isUploading}
+                    >
+                      🗑️
+                    </button>
+                  )}
+                </div>
+
+                {/* Поле для ручного ввода URL (опционально) */}
+                <div className="space-y-1">
+                  <label className="text-xs text-graphite/60">Или укажите URL вручную:</label>
+                  <input
+                    type="text"
+                    value={url}
+                    onChange={(e) => updateImageUrl(index, e.target.value)}
+                    className="input text-sm"
+                    placeholder="/images/product-1.jpg"
+                    disabled={isUploading}
+                  />
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
 

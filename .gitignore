@@ -33,3 +33,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# uploaded images (keep in git for now, remove this line if you want to exclude them)
+# /public/images/products/
+
