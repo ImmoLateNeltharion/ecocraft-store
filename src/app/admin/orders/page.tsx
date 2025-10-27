@@ -42,6 +42,18 @@ export default async function AdminOrdersPage() {
                       Заказ №{order.orderNumber}
                     </h3>
                     <OrderStatusBadge status={order.status} />
+                    {/* Статус оплаты */}
+                    <span className={`text-xs px-3 py-1 rounded-full font-medium ${
+                      order.paymentStatus === 'SUCCEEDED' ? 'bg-green-100 text-green-700' :
+                      order.paymentStatus === 'PENDING' ? 'bg-yellow-100 text-yellow-700' :
+                      order.paymentStatus === 'WAITING_FOR_CAPTURE' ? 'bg-blue-100 text-blue-700' :
+                      'bg-gray-100 text-gray-700'
+                    }`}>
+                      {order.paymentStatus === 'SUCCEEDED' ? '💳 Оплачено' :
+                       order.paymentStatus === 'PENDING' ? '⏳ Ожидает оплаты' :
+                       order.paymentStatus === 'WAITING_FOR_CAPTURE' ? '🔄 Ожидает подтверждения' :
+                       '❌ Отменено'}
+                    </span>
                   </div>
                   <div className="text-sm text-graphite/60">
                     {new Date(order.createdAt).toLocaleString('ru-RU', {

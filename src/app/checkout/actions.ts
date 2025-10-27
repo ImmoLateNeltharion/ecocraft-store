@@ -52,8 +52,8 @@ export async function submitOrder(formData: FormData, orderItems: Array<{
     // Очищаем корзину
     await clearCart()
     
-    // Перенаправляем на страницу успеха
-    redirect('/checkout/success?order=' + order.orderNumber)
+    // Перенаправляем на страницу оплаты
+    redirect('/orders/' + order.id + '/payment')
   } catch (error) {
     console.error('❌ Ошибка при оформлении заказа:', error)
     throw error
