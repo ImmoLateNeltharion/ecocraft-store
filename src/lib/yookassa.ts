@@ -1,13 +1,40 @@
-import YooKassa from 'yookassa'
+const YOOKASSA_API_URL = 'https://api.yookassa.ru/v3'
 
 if (!process.env.YOOKASSA_SHOP_ID || !process.env.YOOKASSA_SECRET_KEY) {
   console.warn('⚠️ ЮKassa credentials not configured. Set YOOKASSA_SHOP_ID and YOOKASSA_SECRET_KEY in .env')
 }
 
-const checkout = new YooKassa({
-  shopId: process.env.YOOKASSA_SHOP_ID || '',
-  secretKey: process.env.YOOKASSA_SECRET_KEY || ''
-})
+function getAuthHeader() {
+  const shopId = process.env.YOOKASSA_SHOP_ID || ''
+  const secretKey = process.env.YOOKASSA_SECRET_KEY || ''
+  const auth = Buffer.from(`${shopId}:${secretKey}`).toString('base64')
+  return `Basic ${auth}`
+}
+
+async function yookassaRequest(endpoint: string, method: string = 'GET', body?: any) {
+  const url = `${YOOKASSA_API_URL}${endpoint}`
+  
+  const headers: HeadersInit = {
+    'Authorization': getAuthHeader(),
+    'Content-Type': 'application/json',
+    'Idempotence-Key': crypto.randomUUID()
+  }
+
+  const options: RequestInit = {
+    method,
+    headers,
+    ...(body && { body: JSON.stringify(body) })
+  }
+
+  const response = await fetch(url, options)
+  
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ message: 'Unknown error' }))
+    throw new Error(error.description || error.message || 'YooKassa API error')
+  }
+
+  return response.json()
+}
 
 export interface CreatePaymentParams {
   amount: number // в копейках
@@ -18,7 +45,7 @@ export interface CreatePaymentParams {
 }
 
 export async function createPayment(params: CreatePaymentParams) {
-  const { amount, orderId, orderNumber, description, email } = params
+  const { amount, orderId, orderNumber, description } = params
 
   const payment = {
     amount: {
@@ -38,7 +65,7 @@ export async function createPayment(params: CreatePaymentParams) {
   }
 
   try {
-    const result = await checkout.createPayment(payment as any)
+    const result = await yookassaRequest('/payments', 'POST', payment)
     return {
       success: true,
       paymentId: result.id,
@@ -56,7 +83,7 @@ export async function createPayment(params: CreatePaymentParams) {
 
 export async function getPaymentInfo(paymentId: string) {
   try {
-    const payment = await checkout.getPayment(paymentId)
+    const payment = await yookassaRequest(`/payments/${paymentId}`, 'GET')
     return {
       success: true,
       payment
@@ -72,14 +99,14 @@ export async function getPaymentInfo(paymentId: string) {
 
 export async function capturePayment(paymentId: string, amount?: number) {
   try {
-    const payment = await checkout.capturePayment(paymentId, {
-      ...(amount && {
-        amount: {
-          value: (amount / 100).toFixed(2),
-          currency: 'RUB'
-        }
-      })
-    })
+    const body = amount ? {
+      amount: {
+        value: (amount / 100).toFixed(2),
+        currency: 'RUB'
+      }
+    } : {}
+    
+    const payment = await yookassaRequest(`/payments/${paymentId}/capture`, 'POST', body)
     return {
       success: true,
       payment
@@ -95,7 +122,7 @@ export async function capturePayment(paymentId: string, amount?: number) {
 
 export async function cancelPayment(paymentId: string) {
   try {
-    const payment = await checkout.cancelPayment(paymentId)
+    const payment = await yookassaRequest(`/payments/${paymentId}/cancel`, 'POST')
     return {
       success: true,
       payment

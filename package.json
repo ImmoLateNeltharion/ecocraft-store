@@ -19,8 +19,7 @@
     "react-dom": "18.3.1",
     "@prisma/client": "5.18.0",
     "zod": "3.23.8",
-    "clsx": "2.1.1",
-    "yookassa": "^1.1.2"
+    "clsx": "2.1.1"
   },
   "devDependencies": {
     "prisma": "5.18.0",
