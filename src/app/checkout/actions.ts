@@ -2,6 +2,7 @@
 
 import { clearCart } from '@/lib/cart'
 import { redirect } from 'next/navigation'
+import { prisma } from '@/lib/db'
 
 export async function submitOrder(formData: FormData, orderItems: Array<{
   product: string
@@ -16,29 +17,45 @@ export async function submitOrder(formData: FormData, orderItems: Array<{
     const email = formData.get('email')?.toString()
     const address = formData.get('address')?.toString()
     const delivery = formData.get('delivery')?.toString()
-    const comment = formData.get('comment')?.toString()
+    const comment = formData.get('comment')?.toString() || undefined
     
-    // Создаем объект заказа
-    const orderData = {
-      name,
-      phone,
-      email,
-      address,
-      delivery,
-      comment,
-      items: orderItems,
-      total
+    if (!name || !phone || !email || !address || !delivery) {
+      throw new Error('Заполните все обязательные поля')
     }
 
-    console.log('Новый заказ:', orderData)
+    // Сохраняем заказ в базу данных
+    const order = await prisma.order.create({
+      data: {
+        name,
+        phone,
+        email,
+        address,
+        delivery,
+        comment,
+        total,
+        items: {
+          create: orderItems.map(item => ({
+            product: item.product,
+            size: item.size,
+            qty: item.qty,
+            price: item.price
+          }))
+        }
+      },
+      include: {
+        items: true
+      }
+    })
+
+    console.log('✅ Заказ создан:', order.orderNumber)
     
     // Очищаем корзину
     await clearCart()
     
     // Перенаправляем на страницу успеха
-    redirect('/checkout/success')
+    redirect('/checkout/success?order=' + order.orderNumber)
   } catch (error) {
-    console.error('Ошибка при оформлении заказа:', error)
+    console.error('❌ Ошибка при оформлении заказа:', error)
     throw error
   }
 }

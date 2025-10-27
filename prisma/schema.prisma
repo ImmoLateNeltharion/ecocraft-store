@@ -96,3 +96,45 @@ enum EcoTag {
   LOCAL_PRODUCTION
 }
 
+model Order {
+  id          String      @id @default(cuid())
+  orderNumber String      @unique @default(cuid())
+  name        String
+  phone       String
+  email       String
+  address     String
+  delivery    String
+  comment     String?
+  items       OrderItem[]
+  total       Int         // в копейках
+  status      OrderStatus @default(NEW)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String @id @default(cuid())
+  order     Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String
+  product   String
+  size      String
+  qty       Int
+  price     Int    // в копейках
+}
+
+enum OrderStatus {
+  NEW
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
