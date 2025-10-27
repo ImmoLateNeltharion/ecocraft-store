@@ -1,10 +1,10 @@
-import { YooCheckout, ICreatePayment } from '@a2seven/yoo-checkout'
+import YooKassa from 'yookassa'
 
 if (!process.env.YOOKASSA_SHOP_ID || !process.env.YOOKASSA_SECRET_KEY) {
   console.warn('⚠️ ЮKassa credentials not configured. Set YOOKASSA_SHOP_ID and YOOKASSA_SECRET_KEY in .env')
 }
 
-const checkout = new YooCheckout({
+const checkout = new YooKassa({
   shopId: process.env.YOOKASSA_SHOP_ID || '',
   secretKey: process.env.YOOKASSA_SECRET_KEY || ''
 })
@@ -20,7 +20,7 @@ export interface CreatePaymentParams {
 export async function createPayment(params: CreatePaymentParams) {
   const { amount, orderId, orderNumber, description, email } = params
 
-  const payment: ICreatePayment = {
+  const payment = {
     amount: {
       value: (amount / 100).toFixed(2), // конвертируем копейки в рубли
       currency: 'RUB'
@@ -34,29 +34,11 @@ export async function createPayment(params: CreatePaymentParams) {
     metadata: {
       orderId,
       orderNumber
-    },
-    ...(email && {
-      receipt: {
-        customer: {
-          email
-        },
-        items: [
-          {
-            description: description,
-            quantity: '1',
-            amount: {
-              value: (amount / 100).toFixed(2),
-              currency: 'RUB'
-            },
-            vat_code: 1 // НДС не облагается
-          }
-        ]
-      }
-    })
+    }
   }
 
   try {
-    const result = await checkout.createPayment(payment)
+    const result = await checkout.createPayment(payment as any)
     return {
       success: true,
       paymentId: result.id,
