@@ -276,11 +276,10 @@ export default function ProductForm({
                 {/* Preview изображения */}
                 {url && (
                   <div className="relative w-full aspect-[4/3] bg-sand rounded-lg overflow-hidden">
-                    <Image
+                    <img
                       src={url}
                       alt={`Image ${index + 1}`}
-                      fill
-                      className="object-contain"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                 )}
