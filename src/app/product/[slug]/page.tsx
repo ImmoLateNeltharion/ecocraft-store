@@ -6,6 +6,7 @@ import { formatPrice } from '@/lib/currency'
 import Badge from '@/components/Badge'
 import { revalidatePath } from 'next/cache'
 import AddToCartForm from './AddToCartForm'
+import { MATERIAL_LABELS } from '@/lib/materials'
 
 const ECO_TAG_LABELS: Record<string, string> = {
   HANDMADE: 'Ручная работа',
@@ -15,18 +16,6 @@ const ECO_TAG_LABELS: Record<string, string> = {
   ORGANIC: 'Органическое',
   RECYCLED_MATERIALS: 'Переработанные материалы',
   LOCAL_PRODUCTION: 'Местное производство'
-}
-
-const MATERIAL_LABELS: Record<string, string> = {
-  LINEN: 'Лён',
-  COTTON: 'Хлопок',
-  WOOL: 'Шерсть',
-  BAMBOO: 'Бамбук',
-  RECYCLED: 'Переработанное',
-  NETTLE: 'Крапива',
-  MUSLIN: 'Муслин',
-  FLANNEL: 'Фланель',
-  TENCEL: 'Тенсель'
 }
 
 const WARMTH_LABELS: Record<string, string> = {
@@ -51,6 +40,9 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
   const productId = product.id
   const productSlug = product.slug
+  const readableMaterials = product.materials.map((mat) => MATERIAL_LABELS[mat] || mat)
+  const primarySize = product.sizes[0]?.label
+  const shortDescription = product.subtitle || product.description.split('\n')[0]
   
   // Сериализуем размеры для клиента
   const sizesData = product.sizes.map(s => ({
@@ -99,11 +91,37 @@ export default async function ProductPage({ params }: { params: { slug: string }
             {formatPrice(product.price)}
           </div>
 
+          {/* Краткие характеристики */}
+          <div className="card p-5 space-y-3 text-sm">
+            <div className="flex justify-between gap-4">
+              <span className="text-graphite/60">Описание:</span>
+              <span className="font-medium text-right text-graphite/80">{shortDescription}</span>
+            </div>
+            {primarySize && (
+              <div className="flex justify-between gap-4">
+                <span className="text-graphite/60">Размер:</span>
+                <span className="font-medium text-right">{primarySize}</span>
+              </div>
+            )}
+            <div className="flex justify-between gap-4">
+              <span className="text-graphite/60">Материалы:</span>
+              <span className="font-medium text-right">{readableMaterials.join(' + ')}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-graphite/60">Стоимость:</span>
+              <span className="font-semibold text-moss">{formatPrice(product.price)}</span>
+            </div>
+          </div>
+
           {/* Характеристики */}
           <div className="card p-5 space-y-3 text-sm">
-            <div className="flex justify-between">
-              <span className="text-graphite/60">Материал:</span>
-              <span className="font-medium">{MATERIAL_LABELS[product.material]}</span>
+            <div className="flex justify-between items-start gap-4">
+              <span className="text-graphite/60">Материалы:</span>
+              <div className="text-right space-y-1">
+                {readableMaterials.map((label) => (
+                  <span key={label} className="block font-medium">{label}</span>
+                ))}
+              </div>
             </div>
             {product.warmth && (
               <div className="flex justify-between">

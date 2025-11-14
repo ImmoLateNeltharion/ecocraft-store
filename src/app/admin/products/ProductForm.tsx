@@ -5,6 +5,18 @@ import { createProduct, updateProduct } from './actions'
 import { Product, Image as PrismaImage, Size } from '@prisma/client'
 import Image from 'next/image'
 
+const MATERIAL_OPTIONS = [
+  { value: 'LINEN', label: 'Лён' },
+  { value: 'COTTON', label: 'Хлопок' },
+  { value: 'WOOL', label: 'Шерсть' },
+  { value: 'BAMBOO', label: 'Бамбук' },
+  { value: 'NETTLE', label: 'Крапива' },
+  { value: 'MUSLIN', label: 'Муслин' },
+  { value: 'FLANNEL', label: 'Фланель' },
+  { value: 'TENCEL', label: 'Тенсель' },
+  { value: 'RECYCLED', label: 'Переработанное' }
+] as const
+
 type ProductWithRelations = Product & {
   images: PrismaImage[]
   sizes: Size[]
@@ -23,14 +35,16 @@ export default function ProductForm({
   const [sizes, setSizes] = useState<Array<{ label: string; inStock: number }>>(
     product?.sizes.map(s => ({ label: s.label, inStock: s.inStock })) || [{ label: '', inStock: 0 }]
   )
+  const [materials, setMaterials] = useState<string[]>(product?.materials || [])
 
   async function handleSubmit(formData: FormData) {
     setIsLoading(true)
     
     try {
-      // Добавляем изображения и размеры в FormData
+      // Добавляем изображения, материалы и размеры в FormData
       formData.set('images', JSON.stringify(imageUrls.filter(url => url)))
       formData.set('sizes', JSON.stringify(sizes.filter(s => s.label)))
+      formData.set('materials', JSON.stringify(materials))
       
       if (product) {
         await updateProduct(product.id, formData)
@@ -40,6 +54,12 @@ export default function ProductForm({
     } finally {
       setIsLoading(false)
     }
+  }
+
+  function toggleMaterial(value: string) {
+    setMaterials(prev => 
+      prev.includes(value) ? prev.filter(m => m !== value) : [...prev, value]
+    )
   }
 
   function addImageUrl() {
@@ -114,7 +134,7 @@ export default function ProductForm({
         <h3 className="font-medium text-graphite">Основная информация</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
+          <div className="space-y-2 md:col-span-2">
             <label className="text-sm font-medium text-graphite">
               Название *
             </label>
@@ -167,21 +187,37 @@ export default function ProductForm({
             </select>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 md:col-span-2">
             <label className="text-sm font-medium text-graphite">
-              Материал *
+              Материалы *
             </label>
-            <select name="material" required defaultValue={product?.material} className="select">
-              <option value="LINEN">Лён</option>
-              <option value="COTTON">Хлопок</option>
-              <option value="WOOL">Шерсть</option>
-              <option value="BAMBOO">Бамбук</option>
-              <option value="NETTLE">Крапива</option>
-              <option value="MUSLIN">Муслин</option>
-              <option value="FLANNEL">Фланель</option>
-              <option value="TENCEL">Tencel</option>
-              <option value="RECYCLED">Переработанное</option>
-            </select>
+            <div className="grid grid-cols-2 gap-2">
+              {MATERIAL_OPTIONS.map(option => {
+                const isActive = materials.includes(option.value)
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => toggleMaterial(option.value)}
+                    className={`text-sm rounded-full px-3 py-2 border transition ${
+                      isActive 
+                        ? 'bg-moss text-white border-moss shadow-sm' 
+                        : 'border-graphite/20 text-graphite hover:border-moss/50'
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                )
+              })}
+            </div>
+            {materials.length > 0 && (
+              <p className="text-xs text-graphite/60">
+                Выбрано: {materials.map(value => MATERIAL_OPTIONS.find(opt => opt.value === value)?.label || value).join(', ')}
+              </p>
+            )}
+            {materials.length === 0 && (
+              <p className="text-xs text-red-500">Выберите хотя бы один материал</p>
+            )}
           </div>
 
           <div className="space-y-2">

@@ -14,7 +14,7 @@ function isValidCategory(value: string): value is Category {
 }
 
 function isValidMaterial(value: string): value is Material {
-  return ['LINEN', 'COTTON', 'WOOL', 'BAMBOO', 'RECYCLED', 'NETTLE', 'MUSLIN', 'FLANNEL'].includes(value)
+  return ['LINEN', 'COTTON', 'WOOL', 'BAMBOO', 'RECYCLED', 'NETTLE', 'MUSLIN', 'FLANNEL', 'TENCEL'].includes(value)
 }
 
 function isValidWarmth(value: string): value is Warmth {
@@ -33,7 +33,7 @@ export default async function CatalogPage({
   }
 
   if (searchParams.material && isValidMaterial(searchParams.material)) {
-    where.material = searchParams.material
+    where.materials = { has: searchParams.material }
   }
 
   if (searchParams.warmth && isValidWarmth(searchParams.warmth)) {
@@ -85,7 +85,7 @@ export default async function CatalogPage({
                 subtitle={p.subtitle}
                 price={p.price}
                 image={p.images[0]?.url ?? '/images/background.jpg'}
-                material={p.material}
+                materials={p.materials}
               />
             ))}
           </div>

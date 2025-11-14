@@ -10,7 +10,7 @@ export async function createProduct(formData: FormData) {
     const subtitle = formData.get('subtitle')?.toString() || undefined
     const description = formData.get('description')?.toString()
     const category = formData.get('category')?.toString() as any
-    const material = formData.get('material')?.toString() as any
+    const materials = JSON.parse(formData.get('materials')?.toString() || '[]')
     const price = Number(formData.get('price')) * 100 // конвертируем в копейки
     const warmth = formData.get('warmth')?.toString() as any || undefined
     const pattern = formData.get('pattern')?.toString() as any || undefined
@@ -20,7 +20,7 @@ export async function createProduct(formData: FormData) {
     const images = JSON.parse(formData.get('images')?.toString() || '[]')
     const sizes = JSON.parse(formData.get('sizes')?.toString() || '[]')
 
-    if (!title || !description || !category || !material || !slug) {
+    if (!title || !description || !category || !slug || !Array.isArray(materials) || materials.length === 0) {
       throw new Error('Заполните все обязательные поля')
     }
 
@@ -30,7 +30,7 @@ export async function createProduct(formData: FormData) {
         subtitle,
         description,
         category,
-        material,
+        materials,
         price,
         warmth,
         pattern,
@@ -68,7 +68,7 @@ export async function updateProduct(productId: string, formData: FormData) {
     const subtitle = formData.get('subtitle')?.toString() || null
     const description = formData.get('description')?.toString()
     const category = formData.get('category')?.toString() as any
-    const material = formData.get('material')?.toString() as any
+    const materials = JSON.parse(formData.get('materials')?.toString() || '[]')
     const price = Number(formData.get('price')) * 100
     const warmth = formData.get('warmth')?.toString() as any || null
     const pattern = formData.get('pattern')?.toString() as any || null
@@ -78,7 +78,7 @@ export async function updateProduct(productId: string, formData: FormData) {
     const images = JSON.parse(formData.get('images')?.toString() || '[]')
     const sizes = JSON.parse(formData.get('sizes')?.toString() || '[]')
 
-    if (!title || !description || !category || !material || !slug) {
+    if (!title || !description || !category || !slug || !Array.isArray(materials) || materials.length === 0) {
       throw new Error('Заполните все обязательные поля')
     }
 
@@ -94,7 +94,7 @@ export async function updateProduct(productId: string, formData: FormData) {
         subtitle,
         description,
         category,
-        material,
+        materials,
         price,
         warmth,
         pattern,

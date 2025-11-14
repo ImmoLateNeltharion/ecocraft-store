@@ -182,7 +182,7 @@ export default async function HomePage() {
                 subtitle={p.subtitle}
                 price={p.price}
                 image={p.images[0]?.url ?? '/images/background.jpg'}
-                material={p.material}
+                materials={p.materials}
               />
             </div>
           ))}

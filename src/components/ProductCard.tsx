@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { formatPrice } from '@/lib/currency'
+import { formatMaterialsList } from '@/lib/materials'
 
 export interface ProductCardProps {
   slug: string
@@ -8,10 +9,12 @@ export interface ProductCardProps {
   subtitle?: string | null
   price: number
   image: string
-  material?: string
+  materials?: string[] | null
 }
 
 export default function ProductCard(props: ProductCardProps) {
+  const materialsLabel = formatMaterialsList(props.materials)
+
   return (
     <Link 
       href={`/product/${props.slug}`} 
@@ -34,9 +37,9 @@ export default function ProductCard(props: ProductCardProps) {
         {props.subtitle && (
           <p className="text-sm text-graphite/60">{props.subtitle}</p>
         )}
-        {props.material && (
+        {materialsLabel && (
           <div className="inline-block">
-            <span className="badge text-xs">{props.material}</span>
+            <span className="badge text-xs">{materialsLabel}</span>
           </div>
         )}
         <div className="pt-2 font-semibold text-lg text-moss flex items-center justify-between">
