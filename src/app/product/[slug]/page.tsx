@@ -64,12 +64,12 @@ export default async function ProductPage({ params }: { params: { slug: string }
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         {/* Изображение */}
         <div className="card overflow-hidden">
-          <div className="aspect-[4/3] relative bg-sand/20">
+          <div className="aspect-[4/3] relative bg-white flex items-center justify-center">
             <Image
               src={product.images[0]?.url ?? '/images/background.jpg'}
               alt={product.title}
               fill
-              className="object-cover"
+              className="object-contain p-6"
               priority
             />
           </div>
