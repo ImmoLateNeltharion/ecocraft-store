@@ -32,8 +32,11 @@ export default function ProductForm({
     product?.images.map(img => img.url) || ['']
   )
   const [uploadingIndexes, setUploadingIndexes] = useState<Set<number>>(new Set())
-  const [sizes, setSizes] = useState<Array<{ label: string; inStock: number }>>(
-    product?.sizes.map(s => ({ label: s.label, inStock: s.inStock })) || [{ label: '', inStock: 0 }]
+  const [sizes, setSizes] = useState<Array<{ length: string; width: string; inStock: number }>>(
+    product?.sizes.map(s => {
+      const [length = '', width = ''] = s.label.split(/[x×]/i).map(part => part.trim())
+      return { length, width, inStock: s.inStock }
+    }) || [{ length: '', width: '', inStock: 0 }]
   )
   const [materials, setMaterials] = useState<string[]>(product?.materials || [])
 
@@ -43,7 +46,14 @@ export default function ProductForm({
     try {
       // Добавляем изображения, материалы и размеры в FormData
       formData.set('images', JSON.stringify(imageUrls.filter(url => url)))
-      formData.set('sizes', JSON.stringify(sizes.filter(s => s.label)))
+      formData.set('sizes', JSON.stringify(
+        sizes
+          .filter(s => s.length && s.width)
+          .map(s => ({
+            label: `${s.length}×${s.width}`,
+            inStock: s.inStock
+          }))
+      ))
       formData.set('materials', JSON.stringify(materials))
       
       if (product) {
@@ -110,19 +120,19 @@ export default function ProductForm({
   }
 
   function addSize() {
-    setSizes([...sizes, { label: '', inStock: 0 }])
+    setSizes([...sizes, { length: '', width: '', inStock: 0 }])
   }
 
   function removeSize(index: number) {
     setSizes(sizes.filter((_, i) => i !== index))
   }
 
-  function updateSize(index: number, field: 'label' | 'inStock', value: string | number) {
+  function updateSize(index: number, field: 'length' | 'width' | 'inStock', value: string | number) {
     const newSizes = [...sizes]
-    if (field === 'label') {
-      newSizes[index].label = value as string
-    } else {
+    if (field === 'inStock') {
       newSizes[index].inStock = Number(value)
+    } else {
+      newSizes[index][field] = value as string
     }
     setSizes(newSizes)
   }
@@ -389,31 +399,43 @@ export default function ProductForm({
 
         <div className="space-y-3">
           {sizes.map((size, index) => (
-            <div key={index} className="flex gap-2">
-              <input
-                type="text"
-                value={size.label}
-                onChange={(e) => updateSize(index, 'label', e.target.value)}
-                className="input flex-1"
-                placeholder="120×180 см"
-              />
-              <input
-                type="number"
-                value={size.inStock}
-                onChange={(e) => updateSize(index, 'inStock', e.target.value)}
-                className="input w-32"
-                placeholder="В наличии"
-                min="0"
-              />
-              {sizes.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => removeSize(index)}
-                  className="btn btn-secondary px-4 text-red-600 hover:bg-red-50"
-                >
-                  ×
-                </button>
-              )}
+            <div key={index} className="flex flex-col gap-3 md:flex-row md:items-center">
+              <div className="flex flex-1 items-center gap-2">
+                <input
+                  type="text"
+                  value={size.length}
+                  onChange={(e) => updateSize(index, 'length', e.target.value)}
+                  className="input flex-1"
+                  placeholder="Длина (см)"
+                />
+                <span className="text-2xl text-graphite/40">×</span>
+                <input
+                  type="text"
+                  value={size.width}
+                  onChange={(e) => updateSize(index, 'width', e.target.value)}
+                  className="input flex-1"
+                  placeholder="Ширина (см)"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  value={size.inStock}
+                  onChange={(e) => updateSize(index, 'inStock', e.target.value)}
+                  className="input w-32"
+                  placeholder="В наличии"
+                  min="0"
+                />
+                {sizes.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeSize(index)}
+                    className="btn btn-secondary text-red-600 hover:bg-red-50"
+                  >
+                    Удалить
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>
