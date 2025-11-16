@@ -92,6 +92,16 @@ export default function ProductForm({
     setUploadingIndexes(prev => new Set(prev).add(index))
 
     try {
+      // Базовая валидация на клиенте
+      if (!file.type.startsWith('image/')) {
+        alert('Ошибка загрузки: файл должен быть изображением')
+        return
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        alert('Ошибка загрузки: файл больше 10MB')
+        return
+      }
+
       const formData = new FormData()
       formData.append('file', file)
 
@@ -100,7 +110,20 @@ export default function ProductForm({
         body: formData
       })
 
-      const data = await response.json()
+      // Поддержка текстовых ответов об ошибке и JSON
+      if (!response.ok) {
+        let msg = `HTTP ${response.status}`
+        try {
+          const err = await response.json()
+          if (err?.error) msg = err.error
+        } catch {
+          try { msg = await response.text() } catch {}
+        }
+        alert('Ошибка загрузки: ' + msg)
+        return
+      }
+
+      const data = await response.json().catch(() => ({} as any))
 
       if (data.success) {
         updateImageUrl(index, data.url)

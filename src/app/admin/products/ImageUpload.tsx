@@ -33,7 +33,19 @@ export default function ImageUpload({
         body: formData
       })
 
-      const data = await response.json()
+      if (!response.ok) {
+        let msg = `HTTP ${response.status}`
+        try {
+          const err = await response.json()
+          if (err?.error) msg = err.error
+        } catch {
+          try { msg = await response.text() } catch {}
+        }
+        alert('Ошибка загрузки: ' + msg)
+        return
+      }
+
+      const data = await response.json().catch(() => ({} as any))
 
       if (data.success) {
         onUpload(data.url)
