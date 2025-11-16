@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { formatPrice } from '@/lib/currency'
 import { formatMaterialsList } from '@/lib/materials'
+import { useState } from 'react'
 
 export interface ProductCardProps {
   slug: string
@@ -13,6 +14,7 @@ export interface ProductCardProps {
 }
 
 export default function ProductCard(props: ProductCardProps) {
+  const [imgSrc, setImgSrc] = useState(props.image || '/images/background.jpg')
   const materialsLabel = formatMaterialsList(props.materials)
 
   return (
@@ -22,11 +24,12 @@ export default function ProductCard(props: ProductCardProps) {
     >
       <div className="aspect-4-3 relative overflow-hidden bg-sand/20">
         <Image 
-          src={props.image} 
+          src={imgSrc} 
           alt={props.title} 
           fill 
           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" 
           className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          onError={() => setImgSrc('/images/background.jpg')}
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
       </div>

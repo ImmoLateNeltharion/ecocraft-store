@@ -65,12 +65,17 @@ export default async function ProductPage({ params }: { params: { slug: string }
         {/* Изображение */}
         <div className="card overflow-hidden self-start">
           <div className="aspect-4-3 relative bg-sand/20 overflow-hidden">
+            {/* Image fallback handled via key toggle to force reload if url broken */}
             <Image
-              src={product.images[0]?.url ?? '/images/background.jpg'}
+              src={product.images[0]?.url || '/images/background.jpg'}
               alt={product.title}
               fill
               className="object-cover"
               priority
+              onError={(e) => {
+                // @ts-ignore
+                e.currentTarget.src = '/images/background.jpg'
+              }}
             />
           </div>
         </div>
