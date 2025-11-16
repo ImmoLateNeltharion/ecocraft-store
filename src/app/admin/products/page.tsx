@@ -47,7 +47,7 @@ export default async function AdminProductsPage() {
                     src={product.images[0].url}
                     alt={product.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-contain transition-transform duration-500"
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center text-graphite/30">

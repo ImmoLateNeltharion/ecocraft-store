@@ -69,7 +69,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
               src={product.images[0]?.url || '/images/background.jpg'}
               alt={product.title}
               fill
-              className="object-cover"
+              className="object-contain"
               priority
             />
           </div>
