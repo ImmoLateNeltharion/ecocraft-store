@@ -41,7 +41,7 @@ export default async function AdminProductsPage() {
           {products.map(product => (
             <div key={product.id} className="card overflow-hidden group">
               {/* Изображение */}
-              <div className="relative aspect-[4/3] bg-sand">
+              <div className="relative aspect-4-3 bg-sand overflow-hidden">
                 {product.images[0] ? (
                   <Image
                     src={product.images[0].url}

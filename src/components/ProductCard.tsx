@@ -20,7 +20,7 @@ export default function ProductCard(props: ProductCardProps) {
       href={`/product/${props.slug}`} 
       className="card overflow-hidden block group hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
     >
-      <div className="aspect-[4/3] relative overflow-hidden bg-sand/20">
+      <div className="aspect-4-3 relative overflow-hidden bg-sand/20">
         <Image 
           src={props.image} 
           alt={props.title} 

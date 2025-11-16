@@ -64,7 +64,7 @@ export default function ImageUpload({
         className="cursor-pointer flex flex-col items-center gap-3"
       >
         {preview ? (
-          <div className="relative w-full aspect-[4/3]">
+          <div className="relative w-full aspect-4-3">
             <Image
               src={preview}
               alt="Preview"

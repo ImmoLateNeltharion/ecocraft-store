@@ -321,7 +321,7 @@ export default function ProductForm({
               <div key={index} className="border border-graphite/20 rounded-lg p-4 space-y-3">
                 {/* Preview изображения */}
                 {url && (
-                  <div className="relative w-full aspect-[4/3] bg-sand rounded-lg overflow-hidden">
+                  <div className="relative w-full aspect-4-3 bg-sand rounded-lg overflow-hidden">
                     <img
                       src={url}
                       alt={`Image ${index + 1}`}
