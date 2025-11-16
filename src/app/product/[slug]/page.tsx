@@ -61,9 +61,9 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
   return (
     <div className="container py-8">
-      <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+      <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
         {/* Изображение */}
-        <div className="card overflow-hidden">
+        <div className="card overflow-hidden self-start">
           <div className="aspect-4-3 relative bg-sand/20 overflow-hidden">
             <Image
               src={product.images[0]?.url ?? '/images/background.jpg'}
