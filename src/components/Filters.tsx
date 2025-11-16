@@ -11,9 +11,6 @@ const OPTIONS = {
   material: [
     ['', 'Все материалы'],
     ['LINEN', 'Лён'],
-    ['COTTON', 'Хлопок'],
-    ['WOOL', 'Шерсть'],
-    ['BAMBOO', 'Бамбук'],
     ['NETTLE', 'Крапива'],
     ['MUSLIN', 'Муслин'],
     ['FLANNEL', 'Фланель'],

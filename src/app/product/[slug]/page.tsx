@@ -6,7 +6,7 @@ import { formatPrice } from '@/lib/currency'
 import Badge from '@/components/Badge'
 import { revalidatePath } from 'next/cache'
 import AddToCartForm from './AddToCartForm'
-import { MATERIAL_LABELS } from '@/lib/materials'
+import { ECO_MATERIAL_KEYS, MATERIAL_LABELS } from '@/lib/materials'
 
 const ECO_TAG_LABELS: Record<string, string> = {
   HANDMADE: 'Ручная работа',
@@ -40,7 +40,9 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
   const productId = product.id
   const productSlug = product.slug
-  const readableMaterials = product.materials.map((mat) => MATERIAL_LABELS[mat] || mat)
+  const readableMaterials = product.materials
+    .filter((mat) => ECO_MATERIAL_KEYS.has(mat as any))
+    .map((mat) => MATERIAL_LABELS[mat] || mat)
   const primarySize = product.sizes[0]?.label
   const shortDescription = product.subtitle || product.description.split('\n')[0]
   

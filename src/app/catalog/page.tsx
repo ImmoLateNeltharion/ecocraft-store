@@ -14,7 +14,8 @@ function isValidCategory(value: string): value is Category {
 }
 
 function isValidMaterial(value: string): value is Material {
-  return ['LINEN', 'COTTON', 'WOOL', 'BAMBOO', 'RECYCLED', 'NETTLE', 'MUSLIN', 'FLANNEL', 'TENCEL'].includes(value)
+  // В каталоге фильтруем только по экологичным материалам
+  return ['LINEN', 'RECYCLED', 'NETTLE', 'MUSLIN', 'FLANNEL', 'TENCEL'].includes(value)
 }
 
 function isValidWarmth(value: string): value is Warmth {

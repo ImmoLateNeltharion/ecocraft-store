@@ -5,11 +5,9 @@ import { createProduct, updateProduct } from './actions'
 import { Product, Image as PrismaImage, Size } from '@prisma/client'
 import Image from 'next/image'
 
+// В админке показываем только экологичные материалы
 const MATERIAL_OPTIONS = [
   { value: 'LINEN', label: 'Лён' },
-  { value: 'COTTON', label: 'Хлопок' },
-  { value: 'WOOL', label: 'Шерсть' },
-  { value: 'BAMBOO', label: 'Бамбук' },
   { value: 'NETTLE', label: 'Крапива' },
   { value: 'MUSLIN', label: 'Муслин' },
   { value: 'FLANNEL', label: 'Фланель' },
