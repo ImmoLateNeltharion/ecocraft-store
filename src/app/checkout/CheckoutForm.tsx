@@ -103,13 +103,14 @@ export default function CheckoutForm({
         />
       </div>
 
-      <div className="bg-sand/30 rounded-xl2 p-4 text-sm text-graphite/70">
+      <div className="bg-sand/30 rounded-xl p-4 text-sm text-graphite/70">
         <p className="mb-2">
           <strong>Обратите внимание:</strong>
         </p>
         <ul className="space-y-1 list-disc list-inside">
-          <li>После оформления заказа мы свяжемся с вами для подтверждения</li>
-          <li>Оплата производится при получении или по согласованию</li>
+          <li>После подтверждения заказа вы будете перенаправлены на страницу оплаты</li>
+          <li>Оплата производится онлайн через защищённый платёжный шлюз ЮKassa</li>
+          <li>После успешной оплаты мы свяжемся с вами для подтверждения доставки</li>
           <li>Доставка по России — от 3 до 7 дней</li>
         </ul>
       </div>
