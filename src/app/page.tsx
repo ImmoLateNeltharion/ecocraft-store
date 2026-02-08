@@ -55,7 +55,7 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
             <h3 className="text-2xl font-serif mb-2">Детские одеяла</h3>
-            <p className="text-sm text-white/80 mb-4">Легкий и дышащий материал ткани, изготовленный из 100% хлопка. Его универсальное применение делает его идеальным выбором как для младенцев, так и для взрослых.</p>
+            <p className="text-sm text-white/80 mb-4">Детское одеяло из чистых природных материалов: крапива придаёт прочность, муслин — лёгкость и воздушность, фланель — мягкость и тепло. Безопасный выбор для нежного возраста: натуральные ткани не раздражают кожу и позволяют малышу спокойно дышать во сне. Для крепкого и спокойного сна вашего ребёнка.</p>
             <Link href="/catalog?category=детские" className="text-sm underline hover:no-underline">
               Смотреть →
             </Link>
@@ -73,7 +73,7 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
             <h3 className="text-2xl font-serif mb-2">Одеяла стандарт</h3>
-            <p className="text-sm text-white/80 mb-4">Ткань входит в состав ворсовых материалов, обладает очень мягким "пушком", который приятен при контакте с кожей даже для новорождённого малыша. Ворс производители располагают как только с изнаночной стороны, так и с обеих одновременно.</p>
+            <p className="text-sm text-white/80 mb-4">Классическое одеяло из экологичных тканей: крапива, муслин, фланель. Натуральные материалы обеспечивают оптимальную терморегуляцию и воздухопроницаемость. Уют, который не требует объяснений.</p>
             <Link href="/catalog?category=стандарт" className="text-sm underline hover:no-underline">
               Смотреть →
             </Link>
@@ -91,7 +91,7 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
             <h3 className="text-2xl font-serif mb-2">Одеяло-ковер-самолет</h3>
-            <p className="text-sm text-white/80 mb-4">Волокна тенселя производятся из эвкалиптовых деревьев путем экологически чистого процесса переработки древесины. Это позволяет создать материал, который идеально подходит людям с чувствительной кожей и аллергическими реакциями. Хлопковая добавка дополнительно усиливает эти свойства, обеспечивая комфортный сон даже для обладателей самой нежной кожи.</p>
+            <p className="text-sm text-white/80 mb-4">Откройте дверь в мир волшебства с одеялом‑ковром‑самолётом! Натуральные ткани (крапива, муслин, фланель) дарят нежную ласку, аромамасло наполняет пространство уютным запахом, аудиоистория уносит в сказочные дали, а картинки пробуждают воображение. Погрузитесь в мультисенсорное путешествие — для души.</p>
             <Link href="/catalog?category=ковер-самолет" className="text-sm underline hover:no-underline">
               Смотреть →
             </Link>
