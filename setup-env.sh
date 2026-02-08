@@ -32,7 +32,8 @@ NEXT_PUBLIC_SITE_URL="https://snovaniel.ru"
 YOOKASSA_SHOP_ID="1198351"
 
 # ЮKassa - Секретный ключ
-YOOKASSA_SECRET_KEY="live_EqUYxFgygXxJhh0EUShEq56vA7enRiaQun_pVvijl3Q"
+# ⚠️ ВАЖНО: Получите ключ в личном кабинете ЮКассы и добавьте вручную!
+YOOKASSA_SECRET_KEY="ваш_secret_key"
 
 # Режим работы
 NODE_ENV="production"
