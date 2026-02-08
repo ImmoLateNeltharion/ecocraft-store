@@ -18,7 +18,7 @@ export default async function AdminLoginPage() {
               Админ панель
             </h1>
             <p className="text-graphite/60">
-              Долина снов Аниэль
+              Долина снов Анэль
             </p>
           </div>
           

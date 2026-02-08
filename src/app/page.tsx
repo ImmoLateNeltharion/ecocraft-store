@@ -27,7 +27,7 @@ export default async function HomePage() {
         
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto animate-fade-in">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif mb-6 leading-tight drop-shadow-lg">
-            Долина снов Аниэль
+            Долина снов Анэль
           </h1>
           <p className="text-lg md:text-xl mb-8 text-white/90 max-w-2xl mx-auto leading-relaxed">
             Натуральные ткани, созданные с любовью. Экологичные одеяла и шоперы ручной работы 
@@ -42,57 +42,75 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Три раздела */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-0">
-        {/* Карточка 1 - Муслин */}
+      {/* Четыре раздела */}
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
+        {/* Карточка 1 - Детские одеяла */}
         <div className="relative h-[400px] overflow-hidden group">
           <Image
             src="/images/muslin-fabrics.jpg"
-            alt="Одеяла из муслина + крапива"
+            alt="Детские одеяла"
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
-            <h3 className="text-2xl font-serif mb-2">Одеяла из муслина + крапива</h3>
+            <h3 className="text-2xl font-serif mb-2">Детские одеяла</h3>
             <p className="text-sm text-white/80 mb-4">Легкий и дышащий материал ткани, изготовленный из 100% хлопка. Его универсальное применение делает его идеальным выбором как для младенцев, так и для взрослых.</p>
-            <Link href="/catalog?material=MUSLIN" className="text-sm underline hover:no-underline">
+            <Link href="/catalog?category=детские" className="text-sm underline hover:no-underline">
               Смотреть →
             </Link>
           </div>
         </div>
 
-        {/* Карточка 2 - Фланель */}
+        {/* Карточка 2 - Одеяла стандарт */}
         <div className="relative h-[400px] overflow-hidden group">
           <Image
             src="/images/additional-fabric.jpg"
-            alt="Одеяла из фланели + крапива"
+            alt="Одеяла стандарт"
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
-            <h3 className="text-2xl font-serif mb-2">Одеяла из фланели + крапива</h3>
+            <h3 className="text-2xl font-serif mb-2">Одеяла стандарт</h3>
             <p className="text-sm text-white/80 mb-4">Ткань входит в состав ворсовых материалов, обладает очень мягким "пушком", который приятен при контакте с кожей даже для новорождённого малыша. Ворс производители располагают как только с изнаночной стороны, так и с обеих одновременно.</p>
-            <Link href="/catalog?material=FLANNEL" className="text-sm underline hover:no-underline">
+            <Link href="/catalog?category=стандарт" className="text-sm underline hover:no-underline">
               Смотреть →
             </Link>
           </div>
         </div>
 
-        {/* Карточка 3 - Тенсель */}
+        {/* Карточка 3 - Одеяло-ковер-самолет */}
         <div className="relative h-[400px] overflow-hidden group">
           <Image
             src="/images/tencel-fabrics.jpg"
-            alt="Одеяла из тенселя + крапива"
+            alt="Одеяло-ковер-самолет"
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
-            <h3 className="text-2xl font-serif mb-2">Одеяла из тенселя + крапива</h3>
+            <h3 className="text-2xl font-serif mb-2">Одеяло-ковер-самолет</h3>
             <p className="text-sm text-white/80 mb-4">Волокна тенселя производятся из эвкалиптовых деревьев путем экологически чистого процесса переработки древесины. Это позволяет создать материал, который идеально подходит людям с чувствительной кожей и аллергическими реакциями. Хлопковая добавка дополнительно усиливает эти свойства, обеспечивая комфортный сон даже для обладателей самой нежной кожи.</p>
-            <Link href="/catalog?material=TENCEL" className="text-sm underline hover:no-underline">
+            <Link href="/catalog?category=ковер-самолет" className="text-sm underline hover:no-underline">
+              Смотреть →
+            </Link>
+          </div>
+        </div>
+
+        {/* Карточка 4 - Шоперы + мешочки */}
+        <div className="relative h-[400px] overflow-hidden group">
+          <Image
+            src="/images/background.jpg"
+            alt="Шоперы + мешочки"
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
+            <h3 className="text-2xl font-serif mb-2">Шоперы + мешочки</h3>
+            <p className="text-sm text-white/80 mb-4">Ручная работа из натуральных тканей. Мешочки и шоперы, которые сочетают экологичность, практичность и теплоту природного материала.</p>
+            <Link href="/catalog?category=шоперы" className="text-sm underline hover:no-underline">
               Смотреть →
             </Link>
           </div>
@@ -182,7 +200,7 @@ export default async function HomePage() {
                 subtitle={p.subtitle}
                 price={p.price}
                 image={p.images[0]?.url ?? '/images/background.jpg'}
-                materials={p.materials}
+                materials={(p as any).materials?.map((m: any) => m.toString()) || null}
               />
             </div>
           ))}

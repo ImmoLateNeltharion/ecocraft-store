@@ -26,7 +26,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
               <h1 className="text-2xl font-serif text-graphite">
                 Админ панель
               </h1>
-              <p className="text-sm text-graphite/60">Долина снов Аниэль</p>
+              <p className="text-sm text-graphite/60">Долина снов Анэль</p>
             </div>
             
             <nav className="flex items-center gap-4">
