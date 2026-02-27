@@ -80,18 +80,18 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* Карточка 3 - Одеяло-ковер-самолет */}
+        {/* Карточка 3 - Одеяло «Ковёр-самолёт» */}
         <div className="relative h-[400px] overflow-hidden group">
           <Image
             src="/images/tencel-fabrics.jpg"
-            alt="Одеяло-ковер-самолет"
+            alt="Одеяло «Ковёр-самолёт»"
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
-            <h3 className="text-2xl font-serif mb-2">Одеяло-ковер-самолет</h3>
-            <p className="text-sm text-white/80 mb-4">Откройте дверь в мир волшебства с одеялом‑ковром‑самолётом! Натуральные ткани (крапива, муслин, фланель) дарят нежную ласку, аромамасло наполняет пространство уютным запахом, аудиоистория уносит в сказочные дали, а картинки пробуждают воображение. Погрузитесь в мультисенсорное путешествие — для души.</p>
+            <h3 className="text-2xl font-serif mb-2">Одеяло «Ковёр-самолёт»</h3>
+            <p className="text-sm text-white/80 mb-4">Откройте дверь в мир волшебства с одеялом «Ковёр-самолёт»! Натуральные ткани (крапива, муслин, фланель) дарят нежную ласку, аромамасло наполняет пространство уютным запахом, аудиоистория уносит в сказочные дали, а картинки пробуждают воображение. Погрузитесь в мультисенсорное путешествие — для души.</p>
             <Link href="/catalog?category=ковер-самолет" className="text-sm underline hover:no-underline">
               Смотреть →
             </Link>

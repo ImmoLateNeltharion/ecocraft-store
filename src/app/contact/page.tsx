@@ -45,8 +45,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <div className="text-sm text-graphite/60">Email</div>
-                    <a href="mailto:info@snovaniel.ru" className="text-moss hover:underline">
-                      info@snovaniel.ru
+                    <a href="mailto:anya.korotkih.ru@gmail.com" className="text-moss hover:underline">
+                      anya.korotkih.ru@gmail.com
                     </a>
                   </div>
                 </div>
@@ -59,8 +59,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <div className="text-sm text-graphite/60">Телефон</div>
-                    <a href="tel:+79001234567" className="text-moss hover:underline">
-                      +7 (900) 123-45-67
+                    <a href="tel:+79092082056" className="text-moss hover:underline">
+                      +7 909 208 2056
                     </a>
                   </div>
                 </div>
@@ -142,7 +142,7 @@ export default function ContactPage() {
                   name="phone"
                   type="tel"
                   className="input"
-                  placeholder="+7 (900) 123-45-67"
+                  placeholder="+7 909 208 2056"
                 />
               </div>
 

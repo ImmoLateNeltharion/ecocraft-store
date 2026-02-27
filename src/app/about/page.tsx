@@ -16,17 +16,38 @@ export default function AboutPage() {
         {/* История */}
         <section className="card p-8 space-y-4">
           <h2 className="text-2xl font-serif text-graphite">Наша история</h2>
-          <div className="prose prose-lg max-w-none text-graphite/70">
+          <div className="prose prose-lg max-w-none text-graphite/70 space-y-4">
             <p>
-              Долина снов Анэль — это семейная мастерская, где каждое изделие создается с любовью 
-              к природе и уважением к традициям. Мы начали свой путь с желания возродить 
-              древние техники работы с натуральными тканями и сделать экологичные товары 
-              доступными для каждого.
+              «Долина снов Анэль» — это союз роскоши и природной гармонии. Мы создаём текстиль, где
+              каждая деталь говорит о вкусе, а каждое прикосновение дарит подлинный комфорт.
             </p>
             <p>
-              Наша мастерская расположена в экологически чистом районе, где мы вручную 
-              создаем одеяла и шоперы из натуральных материалов: льна, крапивы, муслина 
-              и фланели. Каждое изделие уникально и несет в себе тепло рук мастера.
+              Наша идея проста: настоящая роскошь — в естественности. В эпоху синтетики мы возвращаем
+              людям радость от натуральных тканей и ручной работы.
+            </p>
+            <div>
+              <p className="font-medium text-graphite mb-2">Что значит наше название:</p>
+              <ul className="space-y-1 list-none pl-0">
+                <li><span className="font-medium text-graphite">Долина</span> — символ природной чистоты и гармонии;</li>
+                <li><span className="font-medium text-graphite">Сны</span> — метафора безмятежного отдыха;</li>
+                <li><span className="font-medium text-graphite">Анэль</span> — лёгкость и изящество.</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-medium text-graphite mb-2">Наши принципы:</p>
+              <ul className="space-y-1 list-none pl-0">
+                <li><span className="font-medium text-graphite">Натуральность:</span> используем крапиву, муслин, фланель.</li>
+                <li><span className="font-medium text-graphite">Ручная работа:</span> каждое изделие создаётся с вниманием к деталям.</li>
+                <li><span className="font-medium text-graphite">Экологичность:</span> отказ от пластика.</li>
+                <li><span className="font-medium text-graphite">Эксклюзивность:</span> малые партии, возможность индивидуального заказа.</li>
+              </ul>
+            </div>
+            <p>
+              Мы верим: вещи вокруг нас формируют атмосферу жизни. Наши одеяла и текстильные изделия —
+              это приглашение замедлиться и ощутить тепло природы.
+            </p>
+            <p>
+              Добро пожаловать в «Долину снов Анэль» — мир, где комфорт встречается с эстетикой.
             </p>
           </div>
         </section>
