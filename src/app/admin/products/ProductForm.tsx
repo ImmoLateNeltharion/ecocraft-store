@@ -39,6 +39,33 @@ export default function ProductForm({
     }) || [{ length: '', width: '', inStock: 0 }]
   )
   const [materials, setMaterials] = useState<string[]>(product?.materials || [])
+  const [slugValue, setSlugValue] = useState(product?.slug || '')
+  const [slugError, setSlugError] = useState<string | null>(null)
+
+  function validateSlugClient(value: string): string | null {
+    if (!value) return 'Slug не может быть пустым'
+    if (value.length < 2) return 'Слишком короткий (минимум 2 символа)'
+    if (value.length > 100) return 'Слишком длинный (максимум 100 символов)'
+    if (/\s/.test(value)) return 'Пробелы запрещены — используйте дефисы (-)'
+    if (/[А-Яа-яЁё]/.test(value)) return 'Кириллица запрещена — только латиница a-z'
+    if (/[A-Z]/.test(value)) return 'Только строчные буквы'
+    if (value.startsWith('-') || value.endsWith('-')) return 'Не может начинаться или заканчиваться дефисом'
+    if (/--/.test(value)) return 'Два дефиса подряд запрещены'
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(value)) return 'Только: a-z, 0-9, дефис (-)'
+    const reserved = ['new','edit','admin','api','catalog','cart','checkout','product','orders','about','contact','login','logout']
+    if (reserved.includes(value)) return `"${value}" — зарезервированное слово`
+    return null
+  }
+
+  function handleSlugChange(e: React.ChangeEvent<HTMLInputElement>) {
+    // Автоматически чистим: пробелы → дефисы, убираем заглавные, убираем недопустимые символы
+    const cleaned = e.target.value
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9-]/g, '')
+    setSlugValue(cleaned)
+    setSlugError(validateSlugClient(cleaned))
+  }
 
   async function handleSubmit(formData: FormData) {
     setIsLoading(true)
@@ -325,12 +352,18 @@ export default function ProductForm({
             name="slug"
             type="text"
             required
-            defaultValue={product?.slug}
-            className="input"
+            value={slugValue}
+            onChange={handleSlugChange}
+            className={`input ${slugError ? 'border-red-400 bg-red-50 focus:ring-red-300' : slugValue && !slugError ? 'border-green-400 bg-green-50/30' : ''}`}
             placeholder="linen-blanket-classic"
-            pattern="[a-z0-9-]+"
           />
-          <p className="text-xs text-graphite/60">Только маленькие буквы, цифры и дефисы</p>
+          {slugError ? (
+            <p className="text-xs text-red-600 font-medium">⛔ {slugError}</p>
+          ) : slugValue ? (
+            <p className="text-xs text-green-600">✓ URL товара: /product/{slugValue}</p>
+          ) : (
+            <p className="text-xs text-graphite/60">Только строчные латинские буквы, цифры и дефисы</p>
+          )}
         </div>
       </div>
 
@@ -475,8 +508,9 @@ export default function ProductForm({
       <div className="flex gap-3 pt-6 border-t border-graphite/10">
         <button
           type="submit"
-          disabled={isLoading}
-          className="btn btn-primary flex-1 disabled:opacity-50"
+          disabled={isLoading || !!slugError || !slugValue}
+          className="btn btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+          title={slugError || (!slugValue ? 'Заполните slug' : undefined)}
         >
           {isLoading ? 'Сохранение...' : product ? 'Сохранить изменения' : 'Создать товар'}
         </button>
