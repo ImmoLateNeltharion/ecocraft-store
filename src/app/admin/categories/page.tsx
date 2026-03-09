@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import { checkAdminAuth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import Link from 'next/link'
-import { deleteCategory } from './actions'
+import DeleteCategoryButton from './DeleteCategoryButton'
 
 export default async function CategoriesPage() {
   const isAuth = await checkAdminAuth()
@@ -54,11 +54,6 @@ export default async function CategoriesPage() {
               {categories.map(cat => {
                 const productCount = countMap[cat.id] ?? 0
 
-                async function handleDelete() {
-                  'use server'
-                  await deleteCategory(cat.id)
-                }
-
                 return (
                   <tr key={cat.id} className="hover:bg-sand/20 transition">
                     <td className="p-4 font-medium text-graphite">{cat.name}</td>
@@ -80,17 +75,7 @@ export default async function CategoriesPage() {
                           Изменить
                         </Link>
                         {productCount === 0 && (
-                          <form action={handleDelete}>
-                            <button
-                              type="submit"
-                              className="btn btn-secondary text-sm px-3 py-1 text-red-600 hover:bg-red-50"
-                              onClick={(e) => {
-                                if (!confirm(`Удалить категорию "${cat.name}"?`)) e.preventDefault()
-                              }}
-                            >
-                              Удалить
-                            </button>
-                          </form>
+                          <DeleteCategoryButton categoryId={cat.id} categoryName={cat.name} />
                         )}
                       </div>
                     </td>
