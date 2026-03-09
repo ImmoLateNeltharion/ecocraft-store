@@ -56,7 +56,7 @@ export default async function HomePage() {
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
             <h3 className="text-2xl font-serif mb-2">Детские одеяла</h3>
             <p className="text-sm text-white/80 mb-4">Детское одеяло из чистых природных материалов: крапива придаёт прочность, муслин — лёгкость и воздушность, фланель — мягкость и тепло. Безопасный выбор для нежного возраста: натуральные ткани не раздражают кожу и позволяют малышу спокойно дышать во сне. Для крепкого и спокойного сна вашего ребёнка.</p>
-            <Link href="/catalog?category=детские" className="text-sm underline hover:no-underline">
+            <Link href="/catalog?category=CHILDREN" className="text-sm underline hover:no-underline">
               Смотреть →
             </Link>
           </div>
@@ -74,7 +74,7 @@ export default async function HomePage() {
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
             <h3 className="text-2xl font-serif mb-2">Одеяла стандарт</h3>
             <p className="text-sm text-white/80 mb-4">Классическое одеяло из экологичных тканей: крапива, муслин, фланель. Натуральные материалы обеспечивают оптимальную терморегуляцию и воздухопроницаемость. Уют, который не требует объяснений.</p>
-            <Link href="/catalog?category=стандарт" className="text-sm underline hover:no-underline">
+            <Link href="/catalog?category=STANDARD" className="text-sm underline hover:no-underline">
               Смотреть →
             </Link>
           </div>
@@ -92,7 +92,7 @@ export default async function HomePage() {
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
             <h3 className="text-2xl font-serif mb-2">Одеяло «Ковёр-самолёт»</h3>
             <p className="text-sm text-white/80 mb-4">Откройте дверь в мир волшебства с одеялом «Ковёр-самолёт»! Натуральные ткани (крапива, муслин, фланель) дарят нежную ласку, аромамасло наполняет пространство уютным запахом, аудиоистория уносит в сказочные дали, а картинки пробуждают воображение. Погрузитесь в мультисенсорное путешествие — для души.</p>
-            <Link href="/catalog?category=ковер-самолет" className="text-sm underline hover:no-underline">
+            <Link href="/catalog?category=CARPET_PLANE" className="text-sm underline hover:no-underline">
               Смотреть →
             </Link>
           </div>
@@ -110,7 +110,7 @@ export default async function HomePage() {
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
             <h3 className="text-2xl font-serif mb-2">Шоперы + мешочки</h3>
             <p className="text-sm text-white/80 mb-4">Ручная работа из натуральных тканей. Мешочки и шоперы, которые сочетают экологичность, практичность и теплоту природного материала.</p>
-            <Link href="/catalog?category=шоперы" className="text-sm underline hover:no-underline">
+            <Link href="/catalog?category=SHOPPER" className="text-sm underline hover:no-underline">
               Смотреть →
             </Link>
           </div>

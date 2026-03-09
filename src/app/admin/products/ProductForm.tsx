@@ -213,8 +213,11 @@ export default function ProductForm({
               Категория *
             </label>
             <select name="category" required defaultValue={product?.category} className="select">
-              <option value="BLANKET">Одеяло</option>
-              <option value="SHOPPER">Шопер</option>
+              <option value="CHILDREN">Детские одеяла</option>
+              <option value="STANDARD">Одеяла стандарт</option>
+              <option value="CARPET_PLANE">Ковёр-самолёт</option>
+              <option value="SHOPPER">Шоперы + мешочки</option>
+              <option value="BLANKET">Одеяло (общее)</option>
             </select>
           </div>
 

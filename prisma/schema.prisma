@@ -58,6 +58,9 @@ model Review {
 enum Category {
   BLANKET
   SHOPPER
+  CHILDREN
+  STANDARD
+  CARPET_PLANE
 }
 
 enum Material {

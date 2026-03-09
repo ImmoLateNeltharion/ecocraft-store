@@ -10,7 +10,7 @@ interface SearchParams {
 }
 
 function isValidCategory(value: string): value is Category {
-  return ['BLANKET', 'SHOPPER'].includes(value)
+  return ['BLANKET', 'SHOPPER', 'CHILDREN', 'STANDARD', 'CARPET_PLANE'].includes(value)
 }
 
 function isValidMaterial(value: string): value is Material {
