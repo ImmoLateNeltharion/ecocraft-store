@@ -1,16 +1,12 @@
 import { prisma } from '@/lib/db'
 import ProductCard from '@/components/ProductCard'
 import Filters from '@/components/Filters'
-import { Category, Material, Warmth } from '@prisma/client'
+import { Material, Warmth } from '@prisma/client'
 
 interface SearchParams {
   category?: string
   material?: string
   warmth?: string
-}
-
-function isValidCategory(value: string): value is Category {
-  return ['BLANKET', 'SHOPPER', 'CHILDREN', 'STANDARD', 'CARPET_PLANE'].includes(value)
 }
 
 function isValidMaterial(value: string): value is Material {
@@ -27,9 +23,12 @@ export default async function CatalogPage({
 }: {
   searchParams: SearchParams
 }) {
+  const categories = await prisma.productCategory.findMany({ orderBy: { order: 'asc' } })
+  const validCategoryIds = new Set(categories.map(c => c.id))
+
   const where: any = {}
 
-  if (searchParams.category && isValidCategory(searchParams.category)) {
+  if (searchParams.category && validCategoryIds.has(searchParams.category)) {
     where.category = searchParams.category
   }
 
@@ -62,7 +61,7 @@ export default async function CatalogPage({
       {/* Фильтры */}
       <div className="card p-6">
         <h2 className="font-medium mb-4 text-graphite">Фильтры</h2>
-        <Filters />
+        <Filters categories={categories} />
       </div>
 
       {/* Результаты */}

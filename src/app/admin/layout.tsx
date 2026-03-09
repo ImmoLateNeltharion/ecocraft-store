@@ -39,6 +39,9 @@ export default async function AdminLayout({ children }: { children: ReactNode })
               <a href="/admin/products" className="text-sm hover:text-moss transition">
                 Товары
               </a>
+              <a href="/admin/categories" className="text-sm hover:text-moss transition">
+                Категории
+              </a>
               <form action={logoutAction}>
                 <button type="submit" className="text-sm text-red-600 hover:text-red-700">
                   Выход

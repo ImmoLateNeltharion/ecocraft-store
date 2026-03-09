@@ -7,13 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model ProductCategory {
+  id    String @id
+  name  String
+  slug  String @unique
+  order Int    @default(0)
+}
+
 model Product {
   id          String     @id @default(cuid())
   slug        String     @unique
   title       String
   subtitle    String?
   description String
-  category    Category
+  category    String
   materials   Material[] @default([])
   warmth      Warmth?
   color       String?
@@ -55,13 +62,6 @@ model Review {
   createdAt DateTime @default(now())
 }
 
-enum Category {
-  BLANKET
-  SHOPPER
-  CHILDREN
-  STANDARD
-  CARPET_PLANE
-}
 
 enum Material {
   LINEN

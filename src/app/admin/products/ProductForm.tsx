@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { createProduct, updateProduct } from './actions'
-import { Product, Image as PrismaImage, Size } from '@prisma/client'
+import { Product, Image as PrismaImage, Size, ProductCategory } from '@prisma/client'
 import Image from 'next/image'
 
 // В админке показываем только экологичные материалы
@@ -20,10 +20,12 @@ type ProductWithRelations = Product & {
   sizes: Size[]
 }
 
-export default function ProductForm({ 
-  product 
-}: { 
+export default function ProductForm({
+  product,
+  categories = []
+}: {
   product?: ProductWithRelations
+  categories?: ProductCategory[]
 }) {
   const [isLoading, setIsLoading] = useState(false)
   const [imageUrls, setImageUrls] = useState<string[]>(
@@ -213,12 +215,16 @@ export default function ProductForm({
               Категория *
             </label>
             <select name="category" required defaultValue={product?.category} className="select">
-              <option value="CHILDREN">Детские одеяла</option>
-              <option value="STANDARD">Одеяла стандарт</option>
-              <option value="CARPET_PLANE">Ковёр-самолёт</option>
-              <option value="SHOPPER">Шоперы + мешочки</option>
-              <option value="BLANKET">Одеяло (общее)</option>
+              <option value="">— выберите категорию —</option>
+              {categories.map(cat => (
+                <option key={cat.id} value={cat.id}>{cat.name}</option>
+              ))}
             </select>
+            {categories.length === 0 && (
+              <p className="text-xs text-red-500">
+                Нет категорий. <a href="/admin/categories/new" className="underline">Создайте категорию</a>
+              </p>
+            )}
           </div>
 
           <div className="space-y-2 md:col-span-2">

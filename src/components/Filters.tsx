@@ -1,31 +1,26 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
+import { ProductCategory } from '@prisma/client'
 
-const OPTIONS = {
-  category: [
-    ['', 'Все категории'],
-    ['BLANKET', 'Одеяла'],
-    ['SHOPPER', 'Шоперы']
-  ],
-  material: [
-    ['', 'Все материалы'],
-    ['LINEN', 'Лён'],
-    ['NETTLE', 'Крапива'],
-    ['MUSLIN', 'Муслин'],
-    ['FLANNEL', 'Фланель'],
-    ['TENCEL', 'Тенсель'],
-    ['RECYCLED', 'Переработанное']
-  ],
-  warmth: [
-    ['', 'Любая теплота'],
-    ['LIGHT', 'Лёгкое'],
-    ['MEDIUM', 'Среднее'],
-    ['WARM', 'Тёплое']
-  ]
-} as const
+const MATERIAL_OPTIONS = [
+  ['', 'Все материалы'],
+  ['LINEN', 'Лён'],
+  ['NETTLE', 'Крапива'],
+  ['MUSLIN', 'Муслин'],
+  ['FLANNEL', 'Фланель'],
+  ['TENCEL', 'Тенсель'],
+  ['RECYCLED', 'Переработанное']
+] as const
 
-export default function Filters() {
+const WARMTH_OPTIONS = [
+  ['', 'Любая теплота'],
+  ['LIGHT', 'Лёгкое'],
+  ['MEDIUM', 'Среднее'],
+  ['WARM', 'Тёплое']
+] as const
+
+export default function Filters({ categories }: { categories: ProductCategory[] }) {
   const router = useRouter()
   const sp = useSearchParams()
 
@@ -41,21 +36,36 @@ export default function Filters() {
 
   return (
     <div className="flex flex-wrap gap-3">
-      {Object.entries(OPTIONS).map(([key, list]) => (
-        <select
-          key={key}
-          className="select text-sm"
-          value={sp.get(key) ?? ''}
-          onChange={(e) => update(key, e.target.value)}
-        >
-          {list.map(([value, label]) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
-      ))}
+      <select
+        className="select text-sm"
+        value={sp.get('category') ?? ''}
+        onChange={(e) => update('category', e.target.value)}
+      >
+        <option value="">Все категории</option>
+        {categories.map(cat => (
+          <option key={cat.id} value={cat.id}>{cat.name}</option>
+        ))}
+      </select>
+
+      <select
+        className="select text-sm"
+        value={sp.get('material') ?? ''}
+        onChange={(e) => update('material', e.target.value)}
+      >
+        {MATERIAL_OPTIONS.map(([value, label]) => (
+          <option key={value} value={value}>{label}</option>
+        ))}
+      </select>
+
+      <select
+        className="select text-sm"
+        value={sp.get('warmth') ?? ''}
+        onChange={(e) => update('warmth', e.target.value)}
+      >
+        {WARMTH_OPTIONS.map(([value, label]) => (
+          <option key={value} value={value}>{label}</option>
+        ))}
+      </select>
     </div>
   )
 }
-
