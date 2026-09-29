@@ -1,6 +1,7 @@
 'use server'
 
 import { prisma } from '@/lib/db'
+import { requireAdmin } from '@/lib/auth'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
@@ -30,6 +31,7 @@ function validateSlug(slug: string): string | null {
 }
 
 export async function createProduct(formData: FormData) {
+  await requireAdmin()
   try {
     const title = formData.get('title')?.toString()
     const subtitle = formData.get('subtitle')?.toString() || undefined
@@ -95,6 +97,7 @@ export async function createProduct(formData: FormData) {
 }
 
 export async function updateProduct(productId: string, formData: FormData) {
+  await requireAdmin()
   try {
     const title = formData.get('title')?.toString()
     const subtitle = formData.get('subtitle')?.toString() || null
@@ -167,6 +170,7 @@ export async function updateProduct(productId: string, formData: FormData) {
 }
 
 export async function deleteProduct(productId: string) {
+  await requireAdmin()
   try {
     await prisma.product.delete({
       where: { id: productId }

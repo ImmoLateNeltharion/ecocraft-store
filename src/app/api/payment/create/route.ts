@@ -20,6 +20,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Order not found' }, { status: 404 })
     }
 
+    if (order.paymentStatus === 'SUCCEEDED') {
+      return NextResponse.json({ error: 'Заказ уже оплачен' }, { status: 409 })
+    }
+    if (order.status === 'CANCELLED') {
+      return NextResponse.json({ error: 'Заказ отменён' }, { status: 409 })
+    }
+
     // Проверяем, не создан ли уже платеж
     if (order.paymentId) {
       return NextResponse.json({

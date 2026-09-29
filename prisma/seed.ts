@@ -4,6 +4,22 @@ const prisma = new PrismaClient()
 async function main() {
   console.log('🌱 Начинаю заполнение базы данных...')
 
+  // Категории каталога (на них ссылается главная страница)
+  const categories = [
+    { id: 'CHILDREN', name: 'Детские одеяла', order: 1 },
+    { id: 'STANDARD', name: 'Одеяла стандарт', order: 2 },
+    { id: 'CARPET_PLANE', name: 'Одеяло «Ковёр-самолёт»', order: 3 },
+    { id: 'BLANKET', name: 'Пледы', order: 4 },
+    { id: 'SHOPPER', name: 'Шоперы + мешочки', order: 5 }
+  ]
+  for (const c of categories) {
+    await prisma.productCategory.upsert({
+      where: { id: c.id },
+      update: {},
+      create: { ...c, slug: c.id }
+    })
+  }
+
   // Одеяло 1: Льняное классическое
   await prisma.product.upsert({
     where: { slug: 'linen-throw-classic' },

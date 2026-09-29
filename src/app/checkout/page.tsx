@@ -1,37 +1,14 @@
-import { getCart } from '@/lib/cart'
-import { prisma } from '@/lib/db'
+import { getCartItems } from '@/lib/cart'
 import { formatPrice } from '@/lib/currency'
 import { redirect } from 'next/navigation'
 import CheckoutForm from './CheckoutForm'
 
 export default async function CheckoutPage() {
-  const cart = await getCart()
-  
-  if (cart.length === 0) {
+  const { items, total } = await getCartItems()
+
+  if (items.length === 0) {
     redirect('/cart')
   }
-
-  const ids = cart.map((i) => i.productId)
-  const products = await prisma.product.findMany({
-    where: { id: { in: ids } },
-    include: { sizes: true }
-  })
-
-  const items = cart.map((i) => {
-    const p = products.find((p) => p.id === i.productId)!
-    const size = p.sizes.find((s) => s.id === i.sizeId)
-    return { p, size, qty: i.qty }
-  })
-
-  const total = items.reduce((sum, i) => sum + i.p.price * i.qty, 0)
-  
-  // Подготавливаем данные для формы (только сериализуемые данные)
-  const orderItems = items.map(i => ({
-    product: i.p.title,
-    size: i.size?.label || 'Не указан',
-    qty: i.qty,
-    price: i.p.price
-  }))
 
   return (
     <div className="container py-8">
@@ -44,14 +21,14 @@ export default async function CheckoutPage() {
         <div className="card p-6 space-y-4">
           <h2 className="text-xl font-medium text-graphite">Ваш заказ</h2>
           <div className="space-y-3">
-            {items.map((item, idx) => (
-              <div key={idx} className="flex justify-between text-sm">
+            {items.map((item) => (
+              <div key={`${item.product.id}-${item.sizeId ?? ''}`} className="flex justify-between text-sm">
                 <div>
-                  <span className="font-medium">{item.p.title}</span>
+                  <span className="font-medium">{item.product.title}</span>
                   {item.size && <span className="text-graphite/60"> — {item.size.label}</span>}
                   <span className="text-graphite/60"> × {item.qty}</span>
                 </div>
-                <span className="font-medium">{formatPrice(item.p.price * item.qty)}</span>
+                <span className="font-medium">{formatPrice(item.lineTotal)}</span>
               </div>
             ))}
           </div>
@@ -61,10 +38,9 @@ export default async function CheckoutPage() {
           </div>
         </div>
 
-        {/* Форма */}
-        <CheckoutForm orderItems={orderItems} total={total} />
+        {/* Форма. Состав и сумма заказа пересчитываются на сервере из корзины */}
+        <CheckoutForm />
       </div>
     </div>
   )
 }
-

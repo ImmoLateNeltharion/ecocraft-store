@@ -1,20 +1,10 @@
-export default function ContactPage() {
-  async function handleSubmit(formData: FormData) {
-    'use server'
-    
-    const contactData = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      subject: formData.get('subject'),
-      message: formData.get('message')
-    }
+import Link from 'next/link'
+import { CONTACT_SUBJECTS, SITE } from '@/lib/site'
+import { sendContactMessage } from './actions'
+import ContactForm from './ContactForm'
 
-    // Здесь можно добавить отправку на email
-    console.log('Новое сообщение:', contactData)
-    
-    // В реальном приложении здесь будет редирект на страницу успеха
-  }
+export default function ContactPage({ searchParams }: { searchParams: { sent?: string } }) {
+  const sent = searchParams.sent === '1'
 
   return (
     <div className="container py-8">
@@ -35,7 +25,7 @@ export default function ContactPage() {
               <h2 className="text-xl font-medium text-graphite">
                 Наши контакты
               </h2>
-              
+
               <div className="space-y-4">
                 <div className="flex gap-3">
                   <div className="w-10 h-10 flex-shrink-0 bg-moss/10 rounded-lg flex items-center justify-center">
@@ -45,8 +35,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <div className="text-sm text-graphite/60">Email</div>
-                    <a href="mailto:anya.korotkih.ru@gmail.com" className="text-moss hover:underline">
-                      anya.korotkih.ru@gmail.com
+                    <a href={`mailto:${SITE.email}`} className="text-moss hover:underline">
+                      {SITE.email}
                     </a>
                   </div>
                 </div>
@@ -59,8 +49,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <div className="text-sm text-graphite/60">Телефон</div>
-                    <a href="tel:+79092082056" className="text-moss hover:underline">
-                      +7 909 208 2056
+                    <a href={SITE.phoneHref} className="text-moss hover:underline">
+                      {SITE.phone}
                     </a>
                   </div>
                 </div>
@@ -85,10 +75,11 @@ export default function ContactPage() {
                 Мы в соцсетях
               </h2>
               <div className="flex gap-3">
-                <a 
-                  href="https://vk.com/dolinasnova5342" 
-                  target="_blank" 
+                <a
+                  href={SITE.vk}
+                  target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="ВКонтакте"
                   className="w-12 h-12 bg-moss/10 rounded-lg flex items-center justify-center hover:bg-moss/20 transition-colors"
                 >
                   <svg className="w-6 h-6 text-moss" fill="currentColor" viewBox="0 0 24 24">
@@ -104,87 +95,20 @@ export default function ContactPage() {
             <h2 className="text-xl font-medium text-graphite mb-6">
               Напишите нам
             </h2>
-            <form action={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium text-graphite">
-                  Ваше имя *
-                </label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  className="input"
-                  placeholder="Иван Иванов"
-                />
+
+            {sent ? (
+              <div className="space-y-4">
+                <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-xl">
+                  ✅ Сообщение отправлено! Мы ответим вам в течение 1-2 рабочих дней.
+                </div>
+                <Link href="/contact" className="btn btn-secondary">Написать ещё</Link>
               </div>
-
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium text-graphite">
-                  Email *
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  className="input"
-                  placeholder="ivan@example.com"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="phone" className="text-sm font-medium text-graphite">
-                  Телефон
-                </label>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  className="input"
-                  placeholder="+7 909 208 2056"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="subject" className="text-sm font-medium text-graphite">
-                  Тема обращения *
-                </label>
-                <select id="subject" name="subject" required className="select">
-                  <option value="">Выберите тему</option>
-                  <option value="order">Вопрос по заказу</option>
-                  <option value="custom">Индивидуальный заказ</option>
-                  <option value="wholesale">Оптовые закупки</option>
-                  <option value="cooperation">Сотрудничество</option>
-                  <option value="other">Другое</option>
-                </select>
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-medium text-graphite">
-                  Сообщение *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  className="textarea"
-                  placeholder="Расскажите, чем мы можем вам помочь..."
-                />
-              </div>
-
-              <button type="submit" className="btn btn-primary w-full">
-                Отправить сообщение
-              </button>
-
-              <p className="text-xs text-graphite/60 text-center">
-                Мы ответим вам в течение 1-2 рабочих дней
-              </p>
-            </form>
+            ) : (
+              <ContactForm action={sendContactMessage} subjects={CONTACT_SUBJECTS} />
+            )}
           </div>
         </div>
       </div>
     </div>
   )
 }
-

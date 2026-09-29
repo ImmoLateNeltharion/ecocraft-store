@@ -4,14 +4,14 @@ import { useFormStatus } from 'react-dom'
 import { useState, useTransition } from 'react'
 import { handleAddToCart } from './actions'
 
-function SubmitButton() {
+function SubmitButton({ disabled }: { disabled: boolean }) {
   const { pending } = useFormStatus()
-  
+
   return (
-    <button 
-      type="submit" 
-      disabled={pending}
-      className="btn btn-primary w-full text-lg py-3 relative overflow-hidden disabled:opacity-70"
+    <button
+      type="submit"
+      disabled={pending || disabled}
+      className="btn btn-primary w-full text-lg py-3 relative overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed"
     >
       {pending ? (
         <span className="flex items-center justify-center gap-2">
@@ -21,35 +21,41 @@ function SubmitButton() {
           </svg>
           Добавляем...
         </span>
+      ) : disabled ? (
+        'Нет в наличии'
       ) : (
         'Добавить в корзину'
-      )}
-      
-      {pending && (
-        <span className="absolute inset-0 bg-white/20 animate-ping" />
       )}
     </button>
   )
 }
 
-export default function AddToCartForm({ 
+export default function AddToCartForm({
   productId,
-  sizes 
-}: { 
+  sizes
+}: {
   productId: string
   sizes: Array<{ id: string; label: string; inStock: number }>
 }) {
   const [showSuccess, setShowSuccess] = useState(false)
-  const [isPending, startTransition] = useTransition()
+  const [error, setError] = useState<string | null>(null)
+  const [, startTransition] = useTransition()
 
-  async function handleSubmit(formData: FormData) {
+  const firstAvailable = sizes.find((s) => s.inStock > 0)
+  const [selectedSizeId, setSelectedSizeId] = useState(firstAvailable?.id ?? sizes[0]?.id ?? '')
+  const selectedSize = sizes.find((s) => s.id === selectedSizeId)
+  const soldOut = sizes.length > 0 && (!selectedSize || selectedSize.inStock <= 0)
+
+  function handleSubmit(formData: FormData) {
+    setError(null)
     startTransition(async () => {
       const result = await handleAddToCart(productId, formData)
-      
+
       if (result.success) {
         setShowSuccess(true)
-        // Скрыть уведомление через 3 секунды
         setTimeout(() => setShowSuccess(false), 3000)
+      } else {
+        setError(result.error ?? 'Не удалось добавить товар')
       }
     })
   }
@@ -59,19 +65,33 @@ export default function AddToCartForm({
       <form action={handleSubmit} className="space-y-4">
         {sizes.length > 0 && (
           <div className="space-y-2">
-            <label className="text-sm font-medium text-graphite">
+            <label htmlFor="sizeId" className="text-sm font-medium text-graphite">
               Выберите размер:
             </label>
-            <select name="sizeId" className="select" required>
+            <select
+              id="sizeId"
+              name="sizeId"
+              className="select"
+              required
+              value={selectedSizeId}
+              onChange={(e) => { setSelectedSizeId(e.target.value); setError(null) }}
+            >
               {sizes.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.label} — в наличии: {s.inStock} шт.
+                <option key={s.id} value={s.id} disabled={s.inStock <= 0}>
+                  {s.label}{s.inStock <= 0 ? ' — нет в наличии' : s.inStock <= 3 ? ` — осталось ${s.inStock} шт.` : ''}
                 </option>
               ))}
             </select>
           </div>
         )}
-        <SubmitButton />
+
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+            {error}
+          </div>
+        )}
+
+        <SubmitButton disabled={soldOut} />
       </form>
 
       {/* Уведомление об успехе */}
@@ -85,7 +105,7 @@ export default function AddToCartForm({
             </div>
             <div>
               <div className="font-semibold text-lg">Добавлено в корзину!</div>
-              <div className="text-sm text-white/90">Товар успешно добавлен</div>
+              <a href="/cart" className="text-sm text-white/90 underline hover:no-underline">Перейти в корзину</a>
             </div>
           </div>
         </div>
@@ -93,4 +113,3 @@ export default function AddToCartForm({
     </>
   )
 }
-

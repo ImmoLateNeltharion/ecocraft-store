@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { SITE } from '@/lib/site'
 
 export default function Footer() {
   return (
@@ -39,6 +40,19 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
+            <h4 className="font-medium mb-3 mt-6 text-graphite">Покупателям</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/offer" className="text-graphite/70 hover:text-moss transition-colors">
+                  Публичная оферта
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="text-graphite/70 hover:text-moss transition-colors">
+                  Политика конфиденциальности
+                </Link>
+              </li>
+            </ul>
           </div>
 
           {/* Ценности */}
@@ -55,8 +69,9 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-12 pt-8 border-t border-black/5 text-center text-sm text-graphite/60">
-          © {new Date().getFullYear()} Долина снов Анэль. Все права защищены.
+        <div className="mt-12 pt-8 border-t border-black/5 text-center text-sm text-graphite/60 space-y-1">
+          <div>© {new Date().getFullYear()} {SITE.name}. Все права защищены.</div>
+          <div className="text-xs text-graphite/50">{SITE.legal.entity} · ИНН {SITE.legal.inn}</div>
         </div>
       </div>
     </footer>

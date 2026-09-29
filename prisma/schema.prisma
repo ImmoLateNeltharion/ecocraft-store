@@ -119,13 +119,16 @@ model Order {
 }
 
 model OrderItem {
-  id        String @id @default(cuid())
-  order     Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  id        String  @id @default(cuid())
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderId   String
   product   String
   size      String
   qty       Int
-  price     Int    // в копейках
+  price     Int     // в копейках
+  // Ссылки на товар и размер без FK: заказ должен пережить удаление товара
+  productId String?
+  sizeId    String?
 }
 
 enum OrderStatus {
@@ -145,9 +148,29 @@ enum PaymentStatus {
 }
 
 model Admin {
+  id        String         @id @default(cuid())
+  username  String         @unique
+  password  String         // bcrypt-хеш
+  createdAt DateTime       @default(now())
+  sessions  AdminSession[]
+}
+
+model AdminSession {
   id        String   @id @default(cuid())
-  username  String   @unique
-  password  String
+  token     String   @unique
+  admin     Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  adminId   String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
   createdAt DateTime @default(now())
 }
 

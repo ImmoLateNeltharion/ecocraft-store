@@ -122,9 +122,9 @@ export default async function OrderSuccessPage({ params }: { params: { id: strin
           {/* Уведомление */}
           <p className="text-sm text-graphite/60">
             {isPaid ? (
-              <>Мы отправили подтверждение оплаты на <strong>{order.email}</strong></>
+              <>Спасибо! Мы свяжемся с вами по телефону <strong>{order.phone}</strong> или email <strong>{order.email}</strong>, чтобы согласовать доставку</>
             ) : (
-              <>Мы свяжемся с вами в ближайшее время для подтверждения заказа</>
+              <>После оплаты мы свяжемся с вами, чтобы согласовать доставку</>
             )}
           </p>
         </div>

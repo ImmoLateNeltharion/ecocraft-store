@@ -1,6 +1,7 @@
 'use server'
 
 import { prisma } from '@/lib/db'
+import { requireAdmin } from '@/lib/auth'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
@@ -22,6 +23,7 @@ function generateId(name: string): string {
 }
 
 export async function createCategory(formData: FormData) {
+  await requireAdmin()
   const name = formData.get('name')?.toString().trim()
   const order = Number(formData.get('order') || 0)
 
@@ -40,6 +42,7 @@ export async function createCategory(formData: FormData) {
 }
 
 export async function updateCategory(id: string, formData: FormData) {
+  await requireAdmin()
   const name = formData.get('name')?.toString().trim()
   const order = Number(formData.get('order') || 0)
 
@@ -57,6 +60,7 @@ export async function updateCategory(id: string, formData: FormData) {
 }
 
 export async function deleteCategory(id: string) {
+  await requireAdmin()
   const count = await prisma.product.count({ where: { category: id } })
   if (count > 0) {
     return { success: false, error: `Нельзя удалить: в категории ${count} товаров` }

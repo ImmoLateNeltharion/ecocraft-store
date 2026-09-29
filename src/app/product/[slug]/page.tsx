@@ -1,10 +1,8 @@
 import { prisma } from '@/lib/db'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { addToCart } from '@/lib/cart'
 import { formatPrice } from '@/lib/currency'
 import Badge from '@/components/Badge'
-import { revalidatePath } from 'next/cache'
 import AddToCartForm from './AddToCartForm'
 import { ECO_MATERIAL_KEYS, MATERIAL_LABELS } from '@/lib/materials'
 
@@ -39,7 +37,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
   }
 
   const productId = product.id
-  const productSlug = product.slug
   const readableMaterials = product.materials
     .filter((mat) => ECO_MATERIAL_KEYS.has(mat as any))
     .map((mat) => MATERIAL_LABELS[mat] || mat)
@@ -52,14 +49,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
     label: s.label,
     inStock: s.inStock
   }))
-
-  async function handleAddToCart(formData: FormData) {
-    'use server'
-    const sizeId = formData.get('sizeId')?.toString()
-    await addToCart({ productId, sizeId, qty: 1 })
-    revalidatePath('/cart')
-    revalidatePath(`/product/${productSlug}`)
-  }
 
   return (
     <div className="container py-8">
