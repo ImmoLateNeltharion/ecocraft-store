@@ -101,7 +101,7 @@ enum EcoTag {
 
 model Order {
   id            String        @id @default(cuid())
-  orderNumber   String        @unique @default(cuid())
+  orderNumber   String        @unique @default(dbgenerated("(nextval('order_number_seq'::regclass))::text"))
   name          String
   phone         String
   email         String

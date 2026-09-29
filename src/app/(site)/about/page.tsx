@@ -1,4 +1,10 @@
+import type { Metadata } from 'next'
 import Badge from '@/components/Badge'
+
+export const metadata: Metadata = {
+  title: 'О нас',
+  description: 'История бренда «Долина снов Анэль», наши ценности и материалы: лён, крапива, муслин, фланель, тенсель.'
+}
 
 export default function AboutPage() {
   return (

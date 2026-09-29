@@ -23,7 +23,7 @@ export default async function HomePage() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
         
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto animate-fade-in">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif mb-6 leading-tight drop-shadow-lg">
@@ -200,7 +200,7 @@ export default async function HomePage() {
                 subtitle={p.subtitle}
                 price={p.price}
                 image={p.images[0]?.url ?? '/images/background.jpg'}
-                materials={(p as any).materials?.map((m: any) => m.toString()) || null}
+                materials={p.materials}
               />
             </div>
           ))}

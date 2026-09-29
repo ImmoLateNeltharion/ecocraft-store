@@ -3,6 +3,8 @@ import { formatPrice } from '@/lib/currency'
 import { redirect } from 'next/navigation'
 import CheckoutForm from './CheckoutForm'
 
+export const metadata = { title: 'Оформление заказа', robots: { index: false } }
+
 export default async function CheckoutPage() {
   const { items, total } = await getCartItems()
 

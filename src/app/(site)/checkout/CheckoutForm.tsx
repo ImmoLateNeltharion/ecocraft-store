@@ -5,9 +5,17 @@ import Link from 'next/link'
 import { submitOrder } from './actions'
 import { DELIVERY_OPTIONS } from '@/lib/site'
 
+const ADDRESS_HINTS: Record<string, { label: string; placeholder: string }> = {
+  pickup: { label: 'Город и адрес пункта выдачи *', placeholder: 'Москва, ПВЗ СДЭК на ул. Ленина, 10' },
+  courier: { label: 'Адрес доставки *', placeholder: 'Город, улица, дом, квартира' },
+  post: { label: 'Почтовый адрес с индексом *', placeholder: '123456, Москва, ул. Ленина, д. 10, кв. 5' }
+}
+
 export default function CheckoutForm() {
   const [error, setError] = useState<string | null>(null)
+  const [delivery, setDelivery] = useState<string>(DELIVERY_OPTIONS[0].value)
   const [isPending, startTransition] = useTransition()
+  const addressHint = ADDRESS_HINTS[delivery] ?? ADDRESS_HINTS.courier
 
   function handleSubmit(formData: FormData) {
     if (isPending) return
@@ -76,16 +84,31 @@ export default function CheckoutForm() {
         <label htmlFor="delivery" className="text-sm font-medium text-graphite">
           Способ доставки *
         </label>
-        <select id="delivery" name="delivery" required className="select">
+        <select
+          id="delivery"
+          name="delivery"
+          required
+          className="select"
+          value={delivery}
+          onChange={(e) => setDelivery(e.target.value)}
+        >
           {DELIVERY_OPTIONS.map((o) => (
             <option key={o.value} value={o.value}>{o.label}</option>
           ))}
         </select>
+        {delivery === 'pickup' && (
+          <p className="text-xs text-graphite/60">
+            Найдите ближайший пункт на{' '}
+            <a href="https://www.cdek.ru/ru/offices" target="_blank" rel="noopener noreferrer" className="text-moss underline">cdek.ru</a>
+            {' '}или{' '}
+            <a href="https://boxberry.ru/find_an_office" target="_blank" rel="noopener noreferrer" className="text-moss underline">boxberry.ru</a>
+          </p>
+        )}
       </div>
 
       <div className="space-y-2">
         <label htmlFor="address" className="text-sm font-medium text-graphite">
-          Адрес доставки или пункта выдачи *
+          {addressHint.label}
         </label>
         <input
           id="address"
@@ -94,7 +117,7 @@ export default function CheckoutForm() {
           required
           autoComplete="street-address"
           className="input"
-          placeholder="Город, улица, дом, квартира / адрес ПВЗ"
+          placeholder={addressHint.placeholder}
         />
       </div>
 

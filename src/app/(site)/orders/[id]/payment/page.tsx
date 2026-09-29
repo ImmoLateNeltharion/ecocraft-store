@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db'
 import { formatPrice } from '@/lib/currency'
 import PaymentButton from './PaymentButton'
 
+export const metadata = { title: 'Оплата заказа', robots: { index: false } }
+
 export default async function PaymentPage({ params }: { params: { id: string } }) {
   const order = await prisma.order.findUnique({
     where: { id: params.id },

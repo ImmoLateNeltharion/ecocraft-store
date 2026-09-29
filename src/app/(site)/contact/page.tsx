@@ -1,5 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CONTACT_SUBJECTS, SITE } from '@/lib/site'
+
+export const metadata: Metadata = {
+  title: 'Контакты',
+  description: `Свяжитесь с мастерской «${SITE.name}»: телефон, email, форма обратной связи и индивидуальные заказы.`
+}
 import { sendContactMessage } from './actions'
 import ContactForm from './ContactForm'
 

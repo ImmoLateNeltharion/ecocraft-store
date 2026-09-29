@@ -4,6 +4,8 @@ import { formatPrice } from '@/lib/currency'
 import Image from 'next/image'
 import { revalidatePath } from 'next/cache'
 
+export const metadata = { title: 'Корзина', robots: { index: false } }
+
 export default async function CartPage() {
   const { items, total, removed, adjusted } = await getCartItems()
 
