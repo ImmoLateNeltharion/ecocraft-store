@@ -3,6 +3,8 @@
 # ---------- deps ----------
 FROM node:22-alpine AS deps
 WORKDIR /app
+# Prisma нужен OpenSSL для движков (Alpine 3.20+ без него не ставит libssl)
+RUN apk add --no-cache openssl
 COPY package.json package-lock.json ./
 COPY prisma ./prisma
 # Кэш npm переживает повторные сборки; таймауты — на случай медленной сети
@@ -12,6 +14,7 @@ RUN --mount=type=cache,target=/root/.npm \
 # ---------- build ----------
 FROM node:22-alpine AS builder
 WORKDIR /app
+RUN apk add --no-cache openssl
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # NEXT_PUBLIC_SITE_URL попадает в клиентский бандл и в allowedOrigins, поэтому нужен на сборке
@@ -27,6 +30,9 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV HOSTNAME=0.0.0.0
 ENV PORT=3000
+
+# OpenSSL для движков Prisma (migrate deploy при старте + query engine), wget для healthcheck
+RUN apk add --no-cache openssl wget
 
 RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
 
