@@ -141,7 +141,7 @@ npm run prisma:studio
 ecocraft-store/
 ├── prisma/
 │   ├── schema.prisma      # Схема базы данных
-│   └── seed.ts            # Тестовые данные
+│   └── seed.mjs           # Базовый каталог (категории и товары)
 ├── public/
 │   └── images/            # Изображения товаров
 ├── src/
@@ -194,7 +194,7 @@ npm start                # Запуск продакшн-сервера
 npm run prisma:generate  # Генерация Prisma клиента
 npm run prisma:migrate   # Применение миграций
 npm run prisma:studio    # Открыть Prisma Studio
-npm run prisma:seed      # Заполнить тестовыми данными
+npm run prisma:seed      # Залить базовый каталог (категории и товары)
 npm run admin:create -- admin пароль   # Создать/обновить админа (пароль от 8 символов)
 
 # Линтинг
@@ -222,7 +222,7 @@ npm run lint             # Проверка кода
 
 ### Программно:
 
-Отредактируйте `prisma/seed.ts` и запустите `npm run prisma:seed`
+Отредактируйте `prisma/seed.mjs` и запустите `npm run prisma:seed`
 
 ## 🎨 Настройка дизайна
 
