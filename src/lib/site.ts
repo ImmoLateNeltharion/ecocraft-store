@@ -8,12 +8,12 @@ export const SITE = {
   phone: '+7 909 208 2056',
   phoneHref: 'tel:+79092082056',
   vk: 'https://vk.com/dolinasnova5342',
+  // Реквизиты. Пустые поля на сайте не показываются.
   legal: {
-    // Например: "ИП Иванова Анна Ивановна"
-    entity: process.env.LEGAL_ENTITY || 'ИП (укажите в LEGAL_ENTITY)',
-    inn: process.env.LEGAL_INN || '(укажите в LEGAL_INN)',
-    ogrnip: process.env.LEGAL_OGRNIP || '(укажите в LEGAL_OGRNIP)',
-    address: process.env.LEGAL_ADDRESS || '(укажите в LEGAL_ADDRESS)'
+    entity: process.env.LEGAL_ENTITY || '',   // например: "ИП Иванова Анна Ивановна"
+    inn: process.env.LEGAL_INN || '',
+    ogrnip: process.env.LEGAL_OGRNIP || '',
+    address: process.env.LEGAL_ADDRESS || ''
   }
 }
 
@@ -35,4 +35,12 @@ export type DeliveryOption = (typeof DELIVERY_OPTIONS)[number]['value']
 
 export function deliveryLabel(value: string) {
   return DELIVERY_OPTIONS.find((o) => o.value === value)?.label ?? value
+}
+
+/** Строка реквизитов для подвала и документов: только заполненные поля */
+export function legalLine() {
+  const l = SITE.legal
+  return [l.entity, l.inn && `ИНН ${l.inn}`, l.ogrnip && `ОГРНИП ${l.ogrnip}`, l.address && `адрес: ${l.address}`]
+    .filter(Boolean)
+    .join(', ')
 }

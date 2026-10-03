@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { SITE } from '@/lib/site'
+import { SITE, legalLine } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: `Политика конфиденциальности — ${SITE.name}`,
@@ -18,8 +18,7 @@ export default function PrivacyPage() {
           <p>
             Настоящая политика определяет порядок обработки и защиты персональных данных
             пользователей сайта {SITE.url} (далее — Сайт). Оператор персональных данных:
-            {' '}{SITE.legal.entity}, ИНН {SITE.legal.inn}, ОГРНИП {SITE.legal.ogrnip},
-            адрес: {SITE.legal.address} (далее — Оператор).
+            {' '}{legalLine() || `владелец сайта «${SITE.name}»`} (далее — Оператор).
           </p>
           <p>
             Используя Сайт и отправляя формы, пользователь даёт согласие на обработку своих

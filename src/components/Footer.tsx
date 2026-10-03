@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { SITE } from '@/lib/site'
+import { SITE, legalLine } from '@/lib/site'
 
 export default function Footer() {
   return (
@@ -71,7 +71,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="mt-12 pt-8 border-t border-black/5 text-center text-sm text-graphite/60 space-y-1">
           <div>© {new Date().getFullYear()} {SITE.name}. Все права защищены.</div>
-          <div className="text-xs text-graphite/50">{SITE.legal.entity} · ИНН {SITE.legal.inn}</div>
+          {legalLine() && <div className="text-xs text-graphite/50">{legalLine()}</div>}
         </div>
       </div>
     </footer>

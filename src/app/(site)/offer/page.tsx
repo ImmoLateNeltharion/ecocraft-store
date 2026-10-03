@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { SITE } from '@/lib/site'
+import { SITE, legalLine } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: `Публичная оферта — ${SITE.name}`,
@@ -16,8 +16,8 @@ export default function OfferPage() {
         <section className="space-y-2">
           <h2 className="text-xl font-medium text-graphite">1. Общие положения</h2>
           <p>
-            Настоящий документ является публичной офертой {SITE.legal.entity} (ИНН {SITE.legal.inn},
-            ОГРНИП {SITE.legal.ogrnip}, адрес: {SITE.legal.address}; далее — Продавец) в соответствии
+            Настоящий документ является публичной офертой {legalLine() || `владельца сайта «${SITE.name}»`}
+            (далее — Продавец) в соответствии
             со ст. 437 Гражданского кодекса РФ и определяет условия розничной купли-продажи товаров
             через сайт {SITE.url} (далее — Сайт).
           </p>
@@ -83,9 +83,10 @@ export default function OfferPage() {
         <section className="space-y-2">
           <h2 className="text-xl font-medium text-graphite">7. Реквизиты Продавца</h2>
           <p>
-            {SITE.legal.entity}<br />
-            ИНН {SITE.legal.inn}, ОГРНИП {SITE.legal.ogrnip}<br />
-            Адрес: {SITE.legal.address}<br />
+            {SITE.legal.entity && <>{SITE.legal.entity}<br /></>}
+            {SITE.legal.inn && <>ИНН {SITE.legal.inn}<br /></>}
+            {SITE.legal.ogrnip && <>ОГРНИП {SITE.legal.ogrnip}<br /></>}
+            {SITE.legal.address && <>Адрес: {SITE.legal.address}<br /></>}
             Email: {SITE.email}, телефон: {SITE.phone}
           </p>
         </section>
