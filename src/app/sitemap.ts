@@ -2,6 +2,9 @@ import type { MetadataRoute } from 'next'
 import { prisma } from '@/lib/db'
 import { SITE } from '@/lib/site'
 
+// Строится по запросу, а не при сборке образа: на этапе build базы нет
+export const dynamic = 'force-dynamic'
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [products, categories] = await Promise.all([
     prisma.product.findMany({ select: { slug: true, updatedAt: true } }),
