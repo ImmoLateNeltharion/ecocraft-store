@@ -11,6 +11,8 @@ function siteHost() {
 }
 
 const nextConfig = {
+  // Standalone-сборка для Docker: server.js + минимальный node_modules
+  output: 'standalone',
   experimental: {
     serverActions: {
       allowedOrigins: Array.from(new Set(['localhost:3000', siteHost()]))

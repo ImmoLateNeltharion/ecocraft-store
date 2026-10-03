@@ -18,7 +18,7 @@
 - **Styling**: Tailwind CSS
 - **Database**: PostgreSQL + Prisma ORM
 - **Validation**: Zod
-- **Deployment**: Готов к деплою на Vercel, VPS или любой хостинг с Node.js
+- **Deployment**: Docker Compose (PostgreSQL + Next.js + nginx/HTTPS), см. DEPLOY.md
 
 ## 📋 Требования
 
@@ -170,44 +170,16 @@ ecocraft-store/
 
 ## 🚢 Деплой на продакшн
 
-### Vercel (рекомендуется)
+Продакшн разворачивается в Docker Compose: PostgreSQL + приложение + nginx с HTTPS (Let's Encrypt).
+Пошаговая инструкция, обновление и бэкапы — в [DEPLOY.md](DEPLOY.md).
 
-1. Зарегистрируйтесь на https://vercel.com
-2. Подключите репозиторий
-3. Добавьте переменную окружения `DATABASE_URL` в настройках проекта
-4. Vercel автоматически соберет и задеплоит сайт
-
-### VPS (Linux сервер)
+Коротко:
 
 ```bash
-# На сервере установите Node.js и PostgreSQL
-# Клонируйте репозиторий
-git clone <repository-url>
-cd ecocraft-store
-
-# Установите зависимости
-npm install
-
-# Настройте .env с продакшн базой данных
-nano .env
-
-# Примените миграции
-npm run prisma:migrate
-
-# Соберите проект
-npm run build
-
-# Запустите
-npm start
-```
-
-Для автоматического перезапуска используйте PM2:
-
-```bash
-npm install -g pm2
-pm2 start npm --name "ecocraft" -- start
-pm2 save
-pm2 startup
+git clone https://github.com/ImmoLateNeltharion/ecocraft-store.git /opt/ecocraft-store
+cd /opt/ecocraft-store
+bash deploy/setup.sh      # создаст .env — заполните его и запустите ещё раз
+docker compose exec app node scripts/create-admin.mjs admin 'пароль'
 ```
 
 ## 🔧 Полезные команды
@@ -223,6 +195,7 @@ npm run prisma:generate  # Генерация Prisma клиента
 npm run prisma:migrate   # Применение миграций
 npm run prisma:studio    # Открыть Prisma Studio
 npm run prisma:seed      # Заполнить тестовыми данными
+npm run admin:create -- admin пароль   # Создать/обновить админа (пароль от 8 символов)
 
 # Линтинг
 npm run lint             # Проверка кода
