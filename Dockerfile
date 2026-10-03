@@ -40,6 +40,9 @@ RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
+# Копия фото из репо: /app/public/images/products перекрывается volume,
+# entrypoint досыпает оттуда недостающие файлы
+COPY --from=builder /app/public/images/products ./seed-images
 
 # Prisma CLI и клиент для миграций при старте контейнера
 COPY --from=builder /app/prisma ./prisma
